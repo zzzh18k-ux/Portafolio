@@ -60,63 +60,53 @@
         </div>
     </section>
 
-    <!-- TRABAJOS -->
+    <!-- TRABAJOS (Videos de YouTube) -->
     <section class="py-16 px-6 border-t border-neutral-900">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-2xl font-semibold tracking-tight mb-10 text-center">Trabajos Seleccionados</h2>
 
             <div class="space-y-12">
                 <!-- Proyecto 1 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900">
-                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80" 
-                             alt="Proyecto Nike" 
-                             class="w-full aspect-video object-cover group-hover:scale-[1.02] transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                <i class="fa-solid fa-play text-white ml-1"></i>
-                            </span>
-                        </div>
+                <div>
+                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
+                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/CBE1PkDRONc" title="Proyecto 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div>
-                        <h3 class="text-lg font-medium mb-1">Nike — Reel Deportivo</h3>
+                        <h3 class="text-lg font-medium mb-1">Proyecto 1</h3>
                         <p class="text-neutral-500 text-sm">Edición, Motion Graphics, Color Grading</p>
                     </div>
                 </div>
 
                 <!-- Proyecto 2 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900">
-                        <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1200&q=80" 
-                             alt="Neon Nights" 
-                             class="w-full aspect-video object-cover group-hover:scale-[1.02] transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                <i class="fa-solid fa-play text-white ml-1"></i>
-                            </span>
-                        </div>
+                <div>
+                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
+                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/iM32pC5zweY" title="Proyecto 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div>
-                        <h3 class="text-lg font-medium mb-1">Neon Nights — Videoclip Musical</h3>
+                        <h3 class="text-lg font-medium mb-1">Proyecto 2</h3>
                         <p class="text-neutral-500 text-sm">Dirección de post, VFX, Sound Design</p>
                     </div>
                 </div>
 
                 <!-- Proyecto 3 -->
-                <div class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900">
-                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80" 
-                             alt="Documental" 
-                             class="w-full aspect-video object-cover group-hover:scale-[1.02] transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors flex items-center justify-center">
-                            <span class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                <i class="fa-solid fa-play text-white ml-1"></i>
-                            </span>
-                        </div>
+                <div>
+                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
+                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/WZQHXE6hvmg" title="Proyecto 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div>
-                        <h3 class="text-lg font-medium mb-1">Tierra — Documental</h3>
+                        <h3 class="text-lg font-medium mb-1">Proyecto 3</h3>
                         <p class="text-neutral-500 text-sm">Montaje, Corrección de color, Sonido</p>
+                    </div>
+                </div>
+
+                <!-- Proyecto 4 -->
+                <div>
+                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
+                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/iM32pC5zweY" title="Proyecto 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium mb-1">Proyecto 4</h3>
+                        <p class="text-neutral-500 text-sm">Post-producción y Edición Avanzada</p>
                     </div>
                 </div>
             </div>
