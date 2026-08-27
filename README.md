@@ -49,16 +49,16 @@
                 <i class="fa-solid fa-clapperboard"></i> Video Editor & Content Creator
             </p>
             <p class="text-sm sm:text-base text-gray-300 max-w-xl mx-auto mb-8 leading-relaxed">
-                Transformando ideas en historias visuales de alto impacto. Especialista en Premiere Pro, After Effects y DaVinci Resolve. ✨
+                Transformando ideas en historias visuales de alto impacto. Especialista en Premiere Pro, After Effects y DaVinci Resolve.
             </p>
 
             <!-- Botones de Acción -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 max-w-md mx-auto">
                 <a href="https://wa.me/tu_numero_aqui" target="_blank" class="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-600/20 text-sm sm:text-base">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Escríbeme al WhatsApp 🟢
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Escríbeme al WhatsApp
                 </a>
                 <a href="mailto:contacto@alexvfx.com" class="w-full py-3.5 px-6 rounded-xl bg-gray-800/90 hover:bg-gray-800 border border-gray-700 text-gray-200 font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
-                    <i class="fa-regular fa-envelope text-amber-400"></i> Correo 📬
+                    <i class="fa-regular fa-envelope text-amber-400"></i> Correo
                 </a>
             </div>
 
@@ -72,10 +72,10 @@
             </div>
         </div>
 
-        <!-- Sección de Trabajos Destacados (Grid: 1 columna en celular, 2 columnas en PC) -->
+        <!-- Sección de Trabajos Destacados -->
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-8 text-center text-gray-100 flex items-center justify-center gap-3">
-                <i class="fa-solid fa-film text-amber-400"></i> Trabajos Destacados 🎬
+                <i class="fa-solid fa-film text-amber-400"></i> Trabajos Destacados
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -115,7 +115,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-sm text-gray-400 pt-8 border-t border-gray-900">
-            <p>&copy; 2026 Alex.VFX. Todos los derechos reservados. ✨</p>
+            <p>&copy; 2026 Alex.VFX. Todos los derechos reservados.</p>
         </footer>
 
     </div>
