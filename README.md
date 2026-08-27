@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex.VFX | Video Editor & Content Creator</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,6 +17,16 @@
         }
         .gold {
             color: #d4a853;
+        }
+        .border-gold {
+            border-color: #d4a853;
+        }
+        .avatar-ring {
+            background: linear-gradient(135deg, #d4a853, #f0d080, #b8943e);
+            padding: 3px;
+        }
+        .verified-badge {
+            background: linear-gradient(135deg, #d4a853, #f0d080);
         }
     </style>
 </head>
@@ -33,61 +43,88 @@
                 <a href="#about" class="hover:text-white transition-colors">Sobre mí</a>
                 <a href="#contact" class="hover:text-white transition-colors">Contacto</a>
             </div>
-            <a href="#contact" class="text-sm px-4 py-2 border border-neutral-700 hover:border-neutral-400 transition-all rounded-full">
+            <a href="#contact" class="text-sm px-4 py-2 border border-neutral-700 hover:border-gold hover:text-gold transition-all rounded-full">
                 Contratar
             </a>
         </div>
     </nav>
 
-    <!-- PERFIL -->
+    <!-- PERFIL ESTILO RED SOCIAL -->
     <section class="pt-32 pb-16 px-6">
-        <div class="max-w-3xl mx-auto text-center">
-            <!-- Avatar -->
-            <div class="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 rounded-full overflow-hidden border-2 border-neutral-700">
-                <img src="23161avatar.png" alt="Alex.VFX" class="w-full h-full object-cover">
-            </div>
-            
-            <!-- Nombre y título -->
-            <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-2">
-                Alex.VFX
-            </h1>
-            <p class="text-neutral-400 mb-1">Video Editor & Content Creator</p>
-            <p class="text-sm text-neutral-500 mb-6">
-                <i class="fa-solid fa-location-dot mr-1"></i> Venezuela
-                <span class="mx-2">•</span>
-                <span class="gold">Disponible para proyectos</span>
-            </p>
-            
-            <!-- Bio corta -->
-            <p class="text-neutral-400 max-w-lg mx-auto mb-8 text-sm leading-relaxed">
-                Transformo ideas en piezas visuales que conectan. Especializado en post-producción, motion graphics y color grading.
-            </p>
-
-            <!-- Botones de acción -->
-            <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8 max-w-sm mx-auto">
-                <a href="mailto:contacto@alexvfx.com" class="px-6 py-3 bg-white text-black text-sm font-medium rounded-full hover:bg-neutral-200 transition-colors">
-                    <i class="fa-regular fa-envelope mr-2"></i> Email
-                </a>
-                <a href="https://wa.me/tu_numero" target="_blank" class="px-6 py-3 border border-neutral-700 text-sm rounded-full hover:border-neutral-400 transition-colors">
-                    <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp
-                </a>
-            </div>
-
-            <!-- Redes sociales -->
-            <div class="flex justify-center gap-5 text-neutral-500">
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-vimeo-v text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin-in text-xl"></i></a>
+        <div class="max-w-2xl mx-auto">
+            <!-- Tarjeta de perfil -->
+            <div class="bg-neutral-950 border border-neutral-800 rounded-3xl overflow-hidden">
+                <!-- Banner/Cover -->
+                <div class="h-32 sm:h-40 bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 relative">
+                    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 30% 50%, #d4a853 0%, transparent 50%), radial-gradient(circle at 70% 50%, #d4a853 0%, transparent 50%);"></div>
+                </div>
+                
+                <!-- Contenido del perfil -->
+                <div class="px-6 sm:px-8 pb-8">
+                    <!-- Avatar superpuesto -->
+                    <div class="flex justify-start -mt-16 sm:-mt-20 mb-4">
+                        <div class="avatar-ring rounded-full w-28 h-28 sm:w-36 sm:h-36 shadow-2xl">
+                            <img src="23161avatar.png" alt="Alex.VFX" class="w-full h-full object-cover rounded-full border-4 border-neutral-950">
+                        </div>
+                    </div>
+                    
+                    <!-- Nombre y verificación -->
+                    <div class="flex items-center gap-2 mb-1">
+                        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Alex.VFX</h1>
+                        <span class="verified-badge text-black rounded-full p-0.5">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </span>
+                    </div>
+                    
+                    <!-- Título profesional -->
+                    <p class="text-neutral-400 font-medium mb-3">Video Editor & Content Creator</p>
+                    
+                    <!-- Bio -->
+                    <p class="text-neutral-500 text-sm leading-relaxed mb-4 max-w-md">
+                        Transformo ideas en piezas visuales que conectan. Especializado en post-producción, motion graphics y color grading.
+                    </p>
+                    
+                    <!-- Ubicación y estado -->
+                    <div class="flex items-center gap-4 text-sm text-neutral-500 mb-6">
+                        <span><i class="fa-solid fa-location-dot mr-1"></i> Venezuela</span>
+                        <span class="flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            Disponible
+                        </span>
+                    </div>
+                    
+                    <!-- Botones de acción -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                        <a href="mailto:contacto@alexvfx.com" class="flex-1 px-6 py-3 bg-white text-black text-sm font-semibold rounded-full hover:bg-neutral-200 transition-colors text-center">
+                            <i class="fa-regular fa-envelope mr-2"></i> Enviar Email
+                        </a>
+                        <a href="https://wa.me/tu_numero" target="_blank" class="flex-1 px-6 py-3 border border-neutral-700 text-sm font-semibold rounded-full hover:border-gold hover:text-gold transition-colors text-center">
+                            <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp
+                        </a>
+                    </div>
+                    
+                    <!-- Redes sociales -->
+                    <div class="flex items-center justify-center gap-6 pt-6 border-t border-neutral-800">
+                        <a href="#" class="text-neutral-500 hover:text-white transition-colors transform hover:scale-110">
+                            <i class="fa-brands fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="text-neutral-500 hover:text-white transition-colors transform hover:scale-110">
+                            <i class="fa-brands fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-neutral-500 hover:text-white transition-colors transform hover:scale-110">
+                            <i class="fa-brands fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="#" class="text-neutral-500 hover:text-white transition-colors transform hover:scale-110">
+                            <i class="fa-brands fa-vimeo-v text-xl"></i>
+                        </a>
+                        <a href="#" class="text-neutral-500 hover:text-white transition-colors transform hover:scale-110">
+                            <i class="fa-brands fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- SEPARADOR -->
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="border-t border-neutral-900"></div>
-    </div>
 
     <!-- TRABAJOS -->
     <section id="work" class="py-16 px-6">
@@ -166,54 +203,14 @@
 
     <!-- SOBRE MÍ -->
     <section id="about" class="py-16 px-6 border-t border-neutral-900">
-        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
-            <div>
-                <h2 class="text-2xl font-semibold tracking-tight mb-6">Sobre mí</h2>
-                <p class="text-neutral-400 leading-relaxed mb-4 text-sm">
-                    Soy editor de video con más de 5 años de experiencia trabajando con marcas, agencias y creadores de contenido. Mi enfoque está en la narrativa visual — cada corte, transición y ajuste de color tiene un propósito.
-                </p>
-                <p class="text-neutral-400 leading-relaxed text-sm">
-                    He colaborado con equipos en Latinoamérica y Europa, entregando proyectos que no solo cumplen, sino que superan las expectativas.
-                </p>
-            </div>
-            <div class="space-y-5">
-                <div>
-                    <div class="flex justify-between text-sm mb-2">
-                        <span>Premiere Pro</span>
-                        <span class="text-neutral-500">95%</span>
-                    </div>
-                    <div class="h-1 bg-neutral-800 rounded-full">
-                        <div class="h-full w-[95%] bg-neutral-200 rounded-full"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm mb-2">
-                        <span>After Effects</span>
-                        <span class="text-neutral-500">90%</span>
-                    </div>
-                    <div class="h-1 bg-neutral-800 rounded-full">
-                        <div class="h-full w-[90%] bg-neutral-200 rounded-full"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm mb-2">
-                        <span>DaVinci Resolve</span>
-                        <span class="text-neutral-500">85%</span>
-                    </div>
-                    <div class="h-1 bg-neutral-800 rounded-full">
-                        <div class="h-full w-[85%] bg-neutral-200 rounded-full"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm mb-2">
-                        <span>Cinema 4D</span>
-                        <span class="text-neutral-500">70%</span>
-                    </div>
-                    <div class="h-1 bg-neutral-800 rounded-full">
-                        <div class="h-full w-[70%] bg-neutral-200 rounded-full"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-2xl font-semibold tracking-tight mb-6">Sobre mí</h2>
+            <p class="text-neutral-400 leading-relaxed mb-4">
+                Soy editor de video con más de 5 años de experiencia trabajando con marcas, agencias y creadores de contenido. Mi enfoque está en la narrativa visual — cada corte, transición y ajuste de color tiene un propósito.
+            </p>
+            <p class="text-neutral-400 leading-relaxed">
+                He colaborado con equipos en Latinoamérica y Europa, entregando proyectos que no solo cumplen, sino que superan las expectativas.
+            </p>
         </div>
     </section>
 
