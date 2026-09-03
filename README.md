@@ -1,124 +1,137 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex.VFX | Video Editor & Content Creator</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Mi Mini App de Telegram 🚀</title>
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
+        /* Quitamos los bordes para que se vea como app 📱 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
         }
-        body {
-            background-color: #0a0a0a;
-            color: #e5e5e5;
+
+        /* Ocultamos la página principal al principio 🙈 */
+        #mi-pagina {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        /* Estilo para la pantalla bonita del mensaje 🎨 */
+        #pantalla-mensaje {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Color bonito de fondo */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilo del botón 🔘 */
+        #boton-anuncio {
+            background-color: white;
+            color: #764ba2;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Cuando el botón está cargando se ve grisito ⏳ */
+        #boton-anuncio:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <!-- PERFIL -->
-    <section class="pt-20 pb-16 px-6">
-        <div class="max-w-2xl mx-auto text-center">
+    <!-- Esta es la pantalla del mensaje bonito ✨ -->
+    <div id="pantalla-mensaje">
+        <h1>¡Bienvenido a tu espacio favorito! 🖼️💖</h1>
+        <p>Solo ve este anuncio rápido y tendrás acceso libre por las próximas 24 horas. ¡Disfruta sin límites! 🚀</p>
+        <button id="boton-anuncio" onclick="simularAnuncio()">▶️ Ver anuncio (5/5)</button>
+    </div>
+
+    <!-- Tu NUEVA página incrustada (Iframe) 🌐 -->
+    <iframe id="mi-pagina" src="https://imagefree.net/"></iframe>
+
+    <!-- Aquí va la magia que cuenta el tiempo y hace funcionar el botón 🪄 -->
+    <script>
+        // Esta función revisa si ya pasaron las 24 horas 🕵️‍♀️
+        function revisarAcceso() {
+            const tiempoGuardado = localStorage.getItem('acceso_app');
             
-            <!-- Avatar grande con borde -->
-            <div class="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-6 rounded-full p-1 border border-neutral-700">
-                <img src="23161avatar.png" alt="Alex.VFX" class="w-full h-full object-cover rounded-full">
-            </div>
+            if (tiempoGuardado) {
+                const tiempoPasado = Date.now() - parseInt(tiempoGuardado);
+                const veinticuatroHoras = 24 * 60 * 60 * 1000; // Esto es 24 horas en milisegundos ⏱️
+                
+                if (tiempoPasado < veinticuatroHoras) {
+                    // Si no han pasado 24 horas, abrimos la app de una vez 🎉
+                    mostrarAplicacion();
+                }
+            }
+        }
+
+        // Esta función hace el efecto del botón contando 5, 4, 3, 2, 1 ⏳
+        function simularAnuncio() {
+            const boton = document.getElementById('boton-anuncio');
+            let contador = 5; // Empezamos en 5
             
-            <!-- Nombre -->
-            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Alex.VFX</h1>
-            
-            <!-- Título -->
-            <p class="text-neutral-400 mb-4">Video Editor & Content Creator</p>
-            
-            <!-- Bio -->
-            <p class="text-neutral-500 text-sm max-w-md mx-auto mb-8 leading-relaxed">
-                Transformo ideas en piezas visuales que conectan. Especializado en post-producción, motion graphics y color grading.
-            </p>
-            
-            <!-- Botones -->
-            <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8 max-w-sm mx-auto">
-                <a href="mailto:contacto@alexvfx.com" class="px-6 py-3 bg-white text-black text-sm font-medium rounded-full hover:bg-neutral-200 transition-colors">
-                    <i class="fa-regular fa-envelope mr-2"></i> Email
-                </a>
-                <a href="https://wa.me/tu_numero" target="_blank" class="px-6 py-3 border border-neutral-700 text-sm rounded-full hover:border-neutral-400 transition-colors">
-                    <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp
-                </a>
-            </div>
-            
-            <!-- Redes sociales -->
-            <div class="flex justify-center gap-6 text-neutral-500">
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-vimeo-v text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin-in text-xl"></i></a>
-            </div>
-        </div>
-    </section>
+            boton.disabled = true; // Apagamos el botón para que no lo toquen 2 veces 🔒
 
-    <!-- TRABAJOS (Videos de YouTube) -->
-    <section class="py-16 px-6 border-t border-neutral-900">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-semibold tracking-tight mb-10 text-center">Trabajos Seleccionados</h2>
+            const temporizador = setInterval(() => {
+                contador--;
+                
+                if (contador > 0) {
+                    boton.innerText = `⏳ Espere... (${contador}/5)`;
+                } else {
+                    // Cuando llega a cero... ¡Listo! 🎊
+                    clearInterval(temporizador);
+                    boton.innerText = "¡Completado! 🎉";
+                    
+                    // Guardamos la hora actual en el teléfono de la persona 💾
+                    localStorage.setItem('acceso_app', Date.now());
+                    
+                    // Esperamos medio segundo para que vea el "Completado" y abrimos la app 🚀
+                    setTimeout(mostrarAplicacion, 500);
+                }
+            }, 1000); // 1000 significa que cambia cada 1 segundo ⏱️
+        }
 
-            <div class="space-y-12">
-                <!-- Proyecto 1 -->
-                <div>
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
-                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/CBE1PkDRONc" title="Proyecto 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium mb-1">Proyecto 1</h3>
-                        <p class="text-neutral-500 text-sm">Edición, Motion Graphics, Color Grading</p>
-                    </div>
-                </div>
+        // Esta función quita el mensaje y muestra tu iframe 🪄
+        function mostrarAplicacion() {
+            document.getElementById('pantalla-mensaje').style.display = 'none';
+            document.getElementById('mi-pagina').style.display = 'block';
+        }
 
-                <!-- Proyecto 2 -->
-                <div>
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
-                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/iM32pC5zweY" title="Proyecto 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium mb-1">Proyecto 2</h3>
-                        <p class="text-neutral-500 text-sm">Dirección de post, VFX, Sound Design</p>
-                    </div>
-                </div>
-
-                <!-- Proyecto 3 -->
-                <div>
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
-                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/WZQHXE6hvmg" title="Proyecto 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium mb-1">Proyecto 3</h3>
-                        <p class="text-neutral-500 text-sm">Montaje, Corrección de color, Sonido</p>
-                    </div>
-                </div>
-
-                <!-- Proyecto 4 -->
-                <div>
-                    <div class="relative overflow-hidden rounded-xl mb-4 bg-neutral-900 aspect-video">
-                        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/iM32pC5zweY" title="Proyecto 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-medium mb-1">Proyecto 4</h3>
-                        <p class="text-neutral-500 text-sm">Post-producción y Edición Avanzada</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-10 px-6 border-t border-neutral-900">
-        <div class="max-w-4xl mx-auto text-center text-sm text-neutral-600">
-            <p>© 2026 Alex.VFX — Editando historias que importan</p>
-        </div>
-    </footer>
+        // Apenas la persona abre la app, ejecutamos la revisión 👀
+        revisarAcceso();
+    </script>
 
 </body>
 </html>
