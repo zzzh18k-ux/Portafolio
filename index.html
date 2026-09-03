@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Mini App 🚀</title>
     <style>
-        /* Pantalla completa sin bordes ni barras blancas 📱 */
         * {
             box-sizing: border-box;
         }
@@ -19,7 +18,7 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Iframe a pantalla completa 🌐 */
+        /* Iframe de la página 🌐 */
         #mi-pagina {
             width: 100%;
             height: 100%;
@@ -27,7 +26,7 @@
             display: none;
         }
 
-        /* Pantalla bonita de espera 🎨 */
+        /* Pantalla de espera 🎨 */
         #pantalla-mensaje {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -53,7 +52,6 @@
             line-height: 1.4;
         }
 
-        /* Botón de acción 🔘 */
         #boton-anuncio {
             background-color: white;
             color: #764ba2;
@@ -71,6 +69,27 @@
             color: #666666;
             cursor: not-allowed;
         }
+
+        /* 💡 Cartel flotante con la instrucción de descarga */
+        #aviso-descarga {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 380px;
+            background-color: rgba(20, 20, 20, 0.92);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            text-align: center;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            z-index: 50;
+            display: none; /* Se activa al abrir la app */
+            backdrop-filter: blur(5px);
+        }
     </style>
 </head>
 <body>
@@ -84,6 +103,11 @@
 
     <!-- Página incrustada 🌐 -->
     <iframe id="mi-pagina" src="https://imagefree.net/"></iframe>
+
+    <!-- Mensaje flotante de descarga 📥 -->
+    <div id="aviso-descarga">
+        💡 <b>Para descargar:</b> Mantén presionada la imagen 2 segundos y elige <i>"Descargar imagen"</i> 📲
+    </div>
 
     <script>
         function revisarAcceso() {
@@ -118,6 +142,7 @@
         function mostrarAplicacion() {
             document.getElementById('pantalla-mensaje').style.display = 'none';
             document.getElementById('mi-pagina').style.display = 'block';
+            document.getElementById('aviso-descarga').style.display = 'block'; // Aparece el cartelito de ayuda ✨
         }
 
         revisarAcceso();
