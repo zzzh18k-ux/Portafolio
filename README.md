@@ -2,19 +2,24 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Mini App de Telegram 🚀</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mi Mini App 🚀</title>
     <style>
-        /* Quitamos los bordes para que se vea como app 📱 */
+        /* Pantalla completa sin bordes ni barras blancas 📱 */
+        * {
+            box-sizing: border-box;
+        }
         body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
             height: 100%;
             overflow: hidden;
+            background-color: #000;
             font-family: Arial, sans-serif;
         }
 
-        /* Ocultamos la página principal al principio 🙈 */
+        /* Iframe a pantalla completa 🌐 */
         #mi-pagina {
             width: 100%;
             height: 100%;
@@ -22,11 +27,11 @@
             display: none;
         }
 
-        /* Estilo para la pantalla bonita del mensaje 🎨 */
+        /* Pantalla bonita de espera 🎨 */
         #pantalla-mensaje {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Color bonito de fondo */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             display: flex;
             flex-direction: column;
@@ -38,31 +43,31 @@
         }
 
         h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 26px;
+            margin-bottom: 12px;
         }
 
         p {
             font-size: 16px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
-        /* Estilo del botón 🔘 */
+        /* Botón de acción 🔘 */
         #boton-anuncio {
             background-color: white;
             color: #764ba2;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 14px 28px;
+            font-size: 17px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
         }
 
-        /* Cuando el botón está cargando se ve grisito ⏳ */
         #boton-anuncio:disabled {
-            background-color: #cccccc;
+            background-color: #d1d1d1;
             color: #666666;
             cursor: not-allowed;
         }
@@ -70,66 +75,51 @@
 </head>
 <body>
 
-    <!-- Esta es la pantalla del mensaje bonito ✨ -->
+    <!-- Pantalla de bienvenida ✨ -->
     <div id="pantalla-mensaje">
-        <h1>¡Bienvenido a tu espacio favorito! 🖼️💖</h1>
-        <p>Solo ve este anuncio rápido y tendrás acceso libre por las próximas 24 horas. ¡Disfruta sin límites! 🚀</p>
-        <button id="boton-anuncio" onclick="simularAnuncio()">▶️ Ver anuncio (5/5)</button>
+        <h1>¡Bienvenido/a! 🖼️💖</h1>
+        <p>Presiona el botón para desbloquear tu acceso libre por 24 horas 🚀</p>
+        <button id="boton-anuncio" onclick="simularAnuncio()">▶️ Continuar (5/5)</button>
     </div>
 
-    <!-- Tu NUEVA página incrustada (Iframe) 🌐 -->
+    <!-- Página incrustada 🌐 -->
     <iframe id="mi-pagina" src="https://imagefree.net/"></iframe>
 
-    <!-- Aquí va la magia que cuenta el tiempo y hace funcionar el botón 🪄 -->
     <script>
-        // Esta función revisa si ya pasaron las 24 horas 🕵️‍♀️
         function revisarAcceso() {
             const tiempoGuardado = localStorage.getItem('acceso_app');
-            
             if (tiempoGuardado) {
                 const tiempoPasado = Date.now() - parseInt(tiempoGuardado);
-                const veinticuatroHoras = 24 * 60 * 60 * 1000; // Esto es 24 horas en milisegundos ⏱️
-                
+                const veinticuatroHoras = 24 * 60 * 60 * 1000;
                 if (tiempoPasado < veinticuatroHoras) {
-                    // Si no han pasado 24 horas, abrimos la app de una vez 🎉
                     mostrarAplicacion();
                 }
             }
         }
 
-        // Esta función hace el efecto del botón contando 5, 4, 3, 2, 1 ⏳
         function simularAnuncio() {
             const boton = document.getElementById('boton-anuncio');
-            let contador = 5; // Empezamos en 5
-            
-            boton.disabled = true; // Apagamos el botón para que no lo toquen 2 veces 🔒
+            let contador = 5;
+            boton.disabled = true;
 
             const temporizador = setInterval(() => {
                 contador--;
-                
                 if (contador > 0) {
                     boton.innerText = `⏳ Espere... (${contador}/5)`;
                 } else {
-                    // Cuando llega a cero... ¡Listo! 🎊
                     clearInterval(temporizador);
-                    boton.innerText = "¡Completado! 🎉";
-                    
-                    // Guardamos la hora actual en el teléfono de la persona 💾
+                    boton.innerText = "¡Listo! 🎉";
                     localStorage.setItem('acceso_app', Date.now());
-                    
-                    // Esperamos medio segundo para que vea el "Completado" y abrimos la app 🚀
-                    setTimeout(mostrarAplicacion, 500);
+                    setTimeout(mostrarAplicacion, 400);
                 }
-            }, 1000); // 1000 significa que cambia cada 1 segundo ⏱️
+            }, 1000);
         }
 
-        // Esta función quita el mensaje y muestra tu iframe 🪄
         function mostrarAplicacion() {
             document.getElementById('pantalla-mensaje').style.display = 'none';
             document.getElementById('mi-pagina').style.display = 'block';
         }
 
-        // Apenas la persona abre la app, ejecutamos la revisión 👀
         revisarAcceso();
     </script>
 
