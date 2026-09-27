@@ -1,45 +1,395 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Correo Temporal 📧✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mi App TV ðŸ“º</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body, html {
+        :root {
+            --azul-claro: #81d4fa;
+            --morado: #ce93d8;
+            --verde: #aed581;
+            --rosado: #f48fb1;
+            --blanco: #ffffff;
+            --texto: #4a148c;
+            --texto-suave: #6a1b9a;
+            --vidrio: rgba(255, 255, 255, 0.3);
+            --vidrio-borde: rgba(255, 255, 255, 0.6);
+            --sombra: 0 8px 32px rgba(0,0,0,0.15);
+            --radio: 30px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            background-color: #0f172a;
-            font-family: system-ui, -apple-system, sans-serif;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Fredoka', sans-serif;
+            color: var(--texto);
         }
-        .header {
-            background: #1e293b;
-            color: #ffffff;
-            padding: 12px;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
+
+        body {
+            background: linear-gradient(135deg, #e1f5fe 0%, #f3e5f5 25%, #e8f5e9 50%, #fce4ec 75%, #e1f5fe 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-        .iframe-container {
-            width: 100%;
-            height: calc(100vh - 50px);
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        iframe {
-            width: 100%;
-            height: 100%;
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 30%, rgba(129,212,250,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 85% 60%, rgba(206,147,216,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(174,213,129,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 20%, rgba(244,143,177,0.3) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .top-card {
+            background: var(--vidrio);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 2px solid var(--vidrio-borde);
+            padding: 15px 20px;
+            box-shadow: var(--sombra);
+            z-index: 10;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .balance-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--texto-suave);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .balance-display {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #81d4fa, #ce93d8, #f48fb1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-reclamar {
+            background: linear-gradient(135deg, #aed581, #9ccc65);
+            color: #1b5e20;
             border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #388e3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-reclamar:active {
+            transform: scale(0.95);
+        }
+
+        .progress-card {
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            z-index: 10;
+            position: relative;
+            border-bottom: 1px solid var(--vidrio-borde);
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 8px 0;
+            border: 2px solid rgba(255,255,255,0.8);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #81d4fa, #ce93d8, #f48fb1, #aed581);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 2px;
+        }
+
+        .iframe-container {
+            flex: 1;
+            width: 100%;
+            border: none;
+            z-index: 5;
+            position: relative;
+            background: #fff;
+            border-top: 2px solid var(--vidrio-borde);
+        }
+
+        /* Modal / Ventana de Retiro */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(74,20,140,0.5);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 35px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #81d4fa, #ce93d8, #f48fb1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.5);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            margin: 8px 0;
+            color: var(--texto);
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #ce93d8;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .btn-modal {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-retirar {
+            background: linear-gradient(135deg, #ce93d8, #ba68c8);
+            color: #4a148c;
+            border-left: 5px solid #7b1fa2;
+        }
+
+        .btn-cerrar {
+            background: linear-gradient(135deg, #f48fb1, #f06292);
+            color: #880e4f;
+            border-left: 5px solid #c2185b;
+            margin-top: 8px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(74,20,140,0.9);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255,255,255,0.6);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            font-weight: 600;
+            box-shadow: var(--sombra);
+        }
+
+        .toast.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        📬 Tu Bandeja Temporal 🚀
+    <!-- Tarjeta Superior (Saldo y BotÃ³n) -->
+    <div class="top-card">
+        <div class="balance-container">
+            <span class="balance-label">Tu Balance</span>
+            <span class="balance-display">$<span id="saldo-actual">0.000</span></span>
+        </div>
+        <button class="btn-reclamar" onclick="abrirModal()">
+            <i class="fas fa-gift"></i> Reclamar
+        </button>
     </div>
 
-    <div class="iframe-container">
-        <iframe src="https://temp-mail.org/" title="Temp Mail"></iframe>
+    <!-- Tarjeta de Progreso -->
+    <div class="progress-card">
+        <div class="progress-text" id="texto-meta">Meta para $0.01: 0/20 videos ðŸŽ¯</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="barra-color"></div>
+        </div>
     </div>
 
+    <!-- Iframe TV -->
+    <iframe class="iframe-container" src="https://famelack.com/"></iframe>
+
+    <!-- Modal Retiro -->
+    <div class="modal" id="modalRetiro">
+        <div class="modal-card">
+            <div class="modal-title">ðŸ¦ Retirar Fondos</div>
+            
+            <div style="font-size: 12px; font-weight: 600; margin-bottom: 15px; color: var(--texto-suave);">
+                <i class="fas fa-info-circle"></i> MÃ­nimo de retiro: $1.00
+            </div>
+
+            <select id="metodo" class="input-field">
+                <option value="binance_usdt">Binance Pay (USDT)</option>
+                <option value="zinli">Zinli</option>
+            </select>
+            
+            <input type="text" id="billetera" class="input-field" placeholder="Pega tu cuenta aquÃ­... ðŸ“">
+            
+            <button class="btn-modal btn-retirar" onclick="procesarRetiro()">
+                <i class="fas fa-paper-plane"></i> Enviar Pago
+            </button>
+            <button class="btn-modal btn-cerrar" onclick="cerrarModal()">
+                <i class="fas fa-times"></i> Volver a la TV
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-ganancia" class="toast">
+        Â¡Meta cumplida! +$0.01 aÃ±adido ðŸŽ‰
+    </div>
+
+    <script>
+        // LÃ³gica de recompensas
+        let miSaldo = 0.000; 
+        let videosVistos = 0;
+        let metaVideos = 20; 
+        let premio = 0.01;   
+
+        // UI Toast
+        function mostrarToast(mensaje) {
+            const toast = document.getElementById("toast-ganancia");
+            toast.innerText = mensaje;
+            toast.classList.add("show");
+            setTimeout(() => { toast.classList.remove("show"); }, 3000);
+        }
+
+        // Modal
+        function abrirModal() {
+            document.getElementById('modalRetiro').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalRetiro').style.display = 'none';
+        }
+
+        function procesarRetiro() {
+            let billetera = document.getElementById('billetera').value;
+            if (billetera === '') {
+                mostrarToast('âš ï¸ Ingresa tu cuenta de retiro');
+                return;
+            }
+            if (miSaldo >= 1.00) {
+                mostrarToast('âœ… Â¡Ã‰xito! Retiro en proceso');
+                cerrarModal();
+            } else {
+                mostrarToast('â³ Faltan fondos (MÃ­nimo $1.00)');
+            }
+        }
+
+        // Motor de recompensas
+        function registrarVideoVisto() {
+            videosVistos++;
+            
+            let porcentaje = (videosVistos / metaVideos) * 100;
+            document.getElementById('barra-color').style.width = porcentaje + '%';
+            document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos ðŸŽ¯`;
+
+            if (videosVistos >= metaVideos) {
+                miSaldo = miSaldo + premio;
+                document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                
+                mostrarToast(`Â¡Genial! +$${premio} aÃ±adido ðŸŽ‰`);
+
+                videosVistos = 0;
+                setTimeout(function(){
+                    document.getElementById('barra-color').style.width = '0%';
+                    document.getElementById('texto-meta').innerText = `Meta para $${premio}: 0/${metaVideos} videos ðŸŽ¯`;
+                }, 1000);
+            }
+        }
+
+        // Simulador
+        setInterval(registrarVideoVisto, 5000); 
+    </script>
 </body>
 </html>
