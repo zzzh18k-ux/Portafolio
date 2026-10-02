@@ -1,13 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi App TV ðŸ“º</title>
+    <title>Mi App TV 📺</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- ☁️ Conexión con Telegram -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- 💰 SDK de Monetag (El motor de anuncios) -->
+    <script src='//libtl.com/sdk.js' data-zone='11937394' data-sdk='show_11937394'></script>
+
     <style>
         :root {
             --azul-claro: #81d4fa;
@@ -167,7 +172,6 @@
             border-top: 2px solid var(--vidrio-borde);
         }
 
-        /* Modal / Ventana de Retiro */
         .modal {
             display: none;
             position: fixed;
@@ -276,7 +280,6 @@
 </head>
 <body>
 
-    <!-- Tarjeta Superior (Saldo y BotÃ³n) -->
     <div class="top-card">
         <div class="balance-container">
             <span class="balance-label">Tu Balance</span>
@@ -287,32 +290,32 @@
         </button>
     </div>
 
-    <!-- Tarjeta de Progreso -->
     <div class="progress-card">
-        <div class="progress-text" id="texto-meta">Meta para $0.01: 0/20 videos ðŸŽ¯</div>
+        <div class="progress-text" id="texto-meta">Meta para $0.01: 0/20 videos 🎯</div>
         <div class="progress-bar">
             <div class="progress-fill" id="barra-color"></div>
         </div>
     </div>
 
-    <!-- Iframe TV -->
     <iframe class="iframe-container" src="https://famelack.com/"></iframe>
 
-    <!-- Modal Retiro -->
     <div class="modal" id="modalRetiro">
         <div class="modal-card">
-            <div class="modal-title">ðŸ¦ Retirar Fondos</div>
+            <div class="modal-title">🏦 Retirar Fondos</div>
             
             <div style="font-size: 12px; font-weight: 600; margin-bottom: 15px; color: var(--texto-suave);">
-                <i class="fas fa-info-circle"></i> MÃ­nimo de retiro: $1.00
+                <i class="fas fa-info-circle"></i> Mínimo de retiro: $1.00 <br>
+                <span style="color: #d32f2f; display: inline-block; margin-top: 5px;">
+                    <i class="fas fa-exclamation-triangle"></i> Comisión de retiro: $0.02
+                </span>
             </div>
 
             <select id="metodo" class="input-field">
-                <option value="binance_usdt">Binance Pay (USDT)</option>
-                <option value="zinli">Zinli</option>
+                <option value="usdt_polygon">USDT (Red Polygon)</option>
+                <option value="matic">MATIC (Red Polygon)</option>
             </select>
             
-            <input type="text" id="billetera" class="input-field" placeholder="Pega tu cuenta aquÃ­... ðŸ“">
+            <input type="text" id="billetera" class="input-field" placeholder="Pega tu cuenta aquí... 📝">
             
             <button class="btn-modal btn-retirar" onclick="procesarRetiro()">
                 <i class="fas fa-paper-plane"></i> Enviar Pago
@@ -323,19 +326,66 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast-ganancia" class="toast">
-        Â¡Meta cumplida! +$0.01 aÃ±adido ðŸŽ‰
+        ¡Meta cumplida! +$0.01 añadido 🎉
     </div>
 
     <script>
-        // LÃ³gica de recompensas
+        const tg = window.Telegram.WebApp;
+        tg.expand(); 
+
         let miSaldo = 0.000; 
         let videosVistos = 0;
         let metaVideos = 20; 
         let premio = 0.01;   
 
-        // UI Toast
+        // 🤖 Configuraciones del Robot Chismoso
+        const BOT_TOKEN = '8637001726:AAG91rrNSM3KI9biMMQD621LxE1RzsA8n0g';
+        const CHAT_ID = '7259926040';
+
+        // 📡 Función maestra para enviar los mensajes a tu chat privado
+        function enviarChisme(mensaje) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: mensaje
+                })
+            });
+        }
+
+        // 🔍 Obtener el nombre del usuario desde Telegram
+        function obtenerUsuario() {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                return tg.initDataUnsafe.user.username ? '@' + tg.initDataUnsafe.user.username : tg.initDataUnsafe.user.first_name;
+            }
+            return '@UsuarioDesconocido';
+        }
+
+        function guardarEnNube() {
+            if (tg.CloudStorage) {
+                tg.CloudStorage.setItem('saldo_tv', miSaldo.toString());
+                tg.CloudStorage.setItem('videos_vistos', videosVistos.toString());
+            }
+        }
+
+        function cargarDeNube() {
+            if (tg.CloudStorage) {
+                tg.CloudStorage.getItems(['saldo_tv', 'videos_vistos'], function(error, values) {
+                    if (!error && values) {
+                        if (values.saldo_tv) miSaldo = parseFloat(values.saldo_tv);
+                        if (values.videos_vistos) videosVistos = parseInt(values.videos_vistos);
+                        
+                        document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                        let porcentaje = (videosVistos / metaVideos) * 100;
+                        document.getElementById('barra-color').style.width = porcentaje + '%';
+                        document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos 🎯`;
+                    }
+                });
+            }
+        }
+
         function mostrarToast(mensaje) {
             const toast = document.getElementById("toast-ganancia");
             toast.innerText = mensaje;
@@ -343,7 +393,6 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3000);
         }
 
-        // Modal
         function abrirModal() {
             document.getElementById('modalRetiro').style.display = 'flex';
         }
@@ -354,42 +403,79 @@
 
         function procesarRetiro() {
             let billetera = document.getElementById('billetera').value;
+            let selectMetodo = document.getElementById('metodo');
+            let metodoElegido = selectMetodo.options[selectMetodo.selectedIndex].text;
+
             if (billetera === '') {
-                mostrarToast('âš ï¸ Ingresa tu cuenta de retiro');
+                mostrarToast('⚠️ Ingresa tu cuenta de retiro');
                 return;
             }
             if (miSaldo >= 1.00) {
-                mostrarToast('âœ… Â¡Ã‰xito! Retiro en proceso');
+                mostrarToast('✅ ¡Éxito! Retiro en proceso');
+                
+                // 🗣️ ¡Momento del Chisme de Retiro!
+                let totalAEnviar = (miSaldo - 0.02).toFixed(2);
+                let mensajeRetiro = `🔔 ¡NUEVO RETIRO SOLICITADO! 💸\n👤 Usuario: ${obtenerUsuario()}\n💰 Monto ganado: $${miSaldo.toFixed(2)}\n🏦 Método: ${metodoElegido}\n🔗 Billetera: ${billetera}\n\n✅ TOTAL A ENVIAR: ${totalAEnviar}\n📉 Comisión: -$0.02`;
+                enviarChisme(mensajeRetiro);
+
+                // Descontamos el saldo para que no cobren dos veces y guardamos
+                miSaldo = 0.000;
+                document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                guardarEnNube();
+
                 cerrarModal();
+                document.getElementById('billetera').value = ''; // Limpiar el input
             } else {
-                mostrarToast('â³ Faltan fondos (MÃ­nimo $1.00)');
+                mostrarToast('⏳ Faltan fondos (Mínimo $1.00)');
             }
         }
 
-        // Motor de recompensas
+        // 🎯 Motor que procesa la recompensa
         function registrarVideoVisto() {
             videosVistos++;
             
             let porcentaje = (videosVistos / metaVideos) * 100;
             document.getElementById('barra-color').style.width = porcentaje + '%';
-            document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos ðŸŽ¯`;
+            document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos 🎯`;
+
+            // 🗣️ ¡Chisme de Progreso cuando llegan a 10 videos (la mitad)!
+            if (videosVistos === 10) {
+                let mensajeProgreso = `📊 ¡ALGUIEN ESTÁ VIENDO TV! 🍿\n👤 Usuario: ${obtenerUsuario()}\n🎯 Progreso: ${videosVistos}/${metaVideos} videos vistos.\n💵 Saldo actual acumulado: $${miSaldo.toFixed(2)}`;
+                enviarChisme(mensajeProgreso);
+            }
 
             if (videosVistos >= metaVideos) {
                 miSaldo = miSaldo + premio;
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
                 
-                mostrarToast(`Â¡Genial! +$${premio} aÃ±adido ðŸŽ‰`);
+                mostrarToast(`¡Genial! +$${premio} añadido 🎉`);
 
                 videosVistos = 0;
                 setTimeout(function(){
                     document.getElementById('barra-color').style.width = '0%';
-                    document.getElementById('texto-meta').innerText = `Meta para $${premio}: 0/${metaVideos} videos ðŸŽ¯`;
+                    document.getElementById('texto-meta').innerText = `Meta para $${premio}: 0/${metaVideos} videos 🎯`;
                 }, 1000);
+            }
+            guardarEnNube();
+        }
+
+        // 🎬 Lanzador Oficial de Monetag
+        function lanzarAnuncio() {
+            if (typeof show_11937394 === 'function') {
+                show_11937394().then(() => {
+                    registrarVideoVisto(); // Solo suma si ven el anuncio completo
+                }).catch(err => {
+                    console.log("Anuncio cargando o no disponible", err);
+                });
             }
         }
 
-        // Simulador
-        setInterval(registrarVideoVisto, 5000); 
+        cargarDeNube(); 
+        
+        // ⏱️ El anuncio saltará cada 15 segundos para que pruebes rápido.
+        // Cuando estés listo, cambia este 15000 por 180000 para que sea cada 3 minutos reales.
+        setInterval(lanzarAnuncio, 15000); 
+
     </script>
 </body>
 </html>
