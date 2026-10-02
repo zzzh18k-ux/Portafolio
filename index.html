@@ -1,17 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi App TV ðŸ“º</title>
+    <title>Mi App TV 📺</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- â˜ï¸ ConexiÃ³n con Telegram -->
+    <!-- ☁️ Conexión con Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- ðŸ’° SDK de Monetag (El motor de anuncios) -->
+    <!-- 💰 SDK de Monetag (El motor de anuncios) -->
     <script src='//libtl.com/sdk.js' data-zone='11937394' data-sdk='show_11937394'></script>
 
     <style>
@@ -98,15 +97,24 @@
         }
 
         .balance-display {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             background: linear-gradient(135deg, #81d4fa, #ce93d8, #f48fb1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: transform 0.3s ease;
         }
 
-        .btn-reclamar {
+        /* ✨ Animación para cuando el dinero sube */
+        .dinero-sube {
+            transform: scale(1.3);
+            background: linear-gradient(135deg, #aed581, #4caf50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-retirar-top {
             background: linear-gradient(135deg, #aed581, #9ccc65);
             color: #1b5e20;
             border: none;
@@ -123,14 +131,14 @@
             transition: transform 0.2s;
         }
 
-        .btn-reclamar:active {
+        .btn-retirar-top:active {
             transform: scale(0.95);
         }
 
         .progress-card {
             background: rgba(255,255,255,0.4);
             backdrop-filter: blur(8px);
-            padding: 10px 20px;
+            padding: 15px 20px;
             z-index: 10;
             position: relative;
             border-bottom: 1px solid var(--vidrio-borde);
@@ -163,6 +171,52 @@
             margin-bottom: 2px;
         }
 
+        /* 🔘 BOTÓN GRANDE DE RECLAMO */
+        .btn-reclamo-gigante {
+            background: linear-gradient(135deg, #ce93d8, #ba68c8);
+            color: #ffffff;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-bottom: 4px solid #7b1fa2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.2s;
+        }
+
+        .btn-reclamo-gigante:active {
+            transform: scale(0.95);
+        }
+
+        .btn-reclamo-gigante:disabled {
+            background: rgba(255,255,255,0.5);
+            color: #7b1fa2;
+            border-bottom: 4px solid rgba(206,147,216,0.5);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .latir {
+            animation: latido 1.5s infinite;
+            background: linear-gradient(135deg, #aed581, #7cb342);
+            border-bottom: 4px solid #558b2f;
+        }
+
         .iframe-container {
             flex: 1;
             width: 100%;
@@ -173,6 +227,7 @@
             border-top: 2px solid var(--vidrio-borde);
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -286,37 +341,44 @@
             <span class="balance-label">Tu Balance</span>
             <span class="balance-display">$<span id="saldo-actual">0.000</span></span>
         </div>
-        <button class="btn-reclamar" onclick="abrirModal()">
-            <i class="fas fa-gift"></i> Reclamar
+        <!-- Botón superior solo para Retirar -->
+        <button class="btn-retirar-top" onclick="abrirModal()">
+            <i class="fas fa-wallet"></i> Retirar
         </button>
     </div>
 
     <div class="progress-card">
-        <div class="progress-text" id="texto-meta">Meta para $0.01: 0/20 videos ðŸŽ¯</div>
+        <div class="progress-text" id="texto-meta">Progreso para recompensa: 0/20 🎯</div>
         <div class="progress-bar">
             <div class="progress-fill" id="barra-color"></div>
         </div>
+        
+        <!-- 🎁 BOTÓN PRINCIPAL DE DOPAMINA -->
+        <button id="btn-reclamar-premio" class="btn-reclamo-gigante" onclick="ejecutarReclamo()">
+            <i class="fas fa-gift"></i> RECLAMAR $0.01
+        </button>
     </div>
 
+    <!-- La TV sigue reproduciendo abajo automáticamente -->
     <iframe class="iframe-container" src="https://famelack.com/"></iframe>
 
+    <!-- Modal Retiro -->
     <div class="modal" id="modalRetiro">
         <div class="modal-card">
-            <div class="modal-title">ðŸ¦ Retirar Fondos</div>
+            <div class="modal-title">🏦 Retirar Fondos</div>
             
             <div style="font-size: 12px; font-weight: 600; margin-bottom: 15px; color: var(--texto-suave);">
-                <i class="fas fa-info-circle"></i> MÃ­nimo de retiro: $1.00 <br>
+                <i class="fas fa-info-circle"></i> Mínimo de retiro: $1.00 <br>
                 <span style="color: #d32f2f; display: inline-block; margin-top: 5px;">
-                    <i class="fas fa-exclamation-triangle"></i> ComisiÃ³n de retiro: $0.02
+                    <i class="fas fa-exclamation-triangle"></i> Comisión de retiro: $0.02
                 </span>
             </div>
 
-            <!-- âš ï¸ AQUÃ ESTÃ EL CAMBIO: Un solo mÃ©todo de pago -->
             <select id="metodo" class="input-field">
                 <option value="usdt_polygon">USDT POLYGON (matic)</option>
             </select>
             
-            <input type="text" id="billetera" class="input-field" placeholder="Pega tu cuenta aquÃ­... ðŸ“">
+            <input type="text" id="billetera" class="input-field" placeholder="Pega tu cuenta aquí... 📝">
             
             <button class="btn-modal btn-retirar" onclick="procesarRetiro()">
                 <i class="fas fa-paper-plane"></i> Enviar Pago
@@ -328,7 +390,7 @@
     </div>
 
     <div id="toast-ganancia" class="toast">
-        Â¡Meta cumplida! +$0.01 aÃ±adido ðŸŽ‰
+        ¡Meta cumplida! +$0.01 añadido 🎉
     </div>
 
     <script>
@@ -339,24 +401,19 @@
         let videosVistos = 0;
         let metaVideos = 20; 
         let premio = 0.01;   
+        let reclamoGratisHecho = false; // Bandera del primer regalo
 
-        // ðŸ¤– Configuraciones del Robot Chismoso
         const BOT_TOKEN = '8637001726:AAG91rrNSM3KI9biMMQD621LxE1RzsA8n0g';
         const CHAT_ID = '7259926040';
 
-        // ðŸ“¡ FunciÃ³n maestra para enviar los mensajes a tu chat privado
         function enviarChisme(mensaje) {
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: mensaje
-                })
+                body: JSON.stringify({ chat_id: CHAT_ID, text: mensaje })
             });
         }
 
-        // ðŸ” Obtener el nombre del usuario desde Telegram
         function obtenerUsuario() {
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
                 return tg.initDataUnsafe.user.username ? '@' + tg.initDataUnsafe.user.username : tg.initDataUnsafe.user.first_name;
@@ -368,22 +425,24 @@
             if (tg.CloudStorage) {
                 tg.CloudStorage.setItem('saldo_tv', miSaldo.toString());
                 tg.CloudStorage.setItem('videos_vistos', videosVistos.toString());
+                tg.CloudStorage.setItem('regalo_dado', reclamoGratisHecho.toString());
             }
         }
 
         function cargarDeNube() {
             if (tg.CloudStorage) {
-                tg.CloudStorage.getItems(['saldo_tv', 'videos_vistos'], function(error, values) {
+                tg.CloudStorage.getItems(['saldo_tv', 'videos_vistos', 'regalo_dado'], function(error, values) {
                     if (!error && values) {
                         if (values.saldo_tv) miSaldo = parseFloat(values.saldo_tv);
                         if (values.videos_vistos) videosVistos = parseInt(values.videos_vistos);
+                        if (values.regalo_dado) reclamoGratisHecho = (values.regalo_dado === 'true');
                         
                         document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
-                        let porcentaje = (videosVistos / metaVideos) * 100;
-                        document.getElementById('barra-color').style.width = porcentaje + '%';
-                        document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos ðŸŽ¯`;
+                        actualizarInterfazBoton();
                     }
                 });
+            } else {
+                actualizarInterfazBoton();
             }
         }
 
@@ -394,107 +453,121 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3000);
         }
 
-        function abrirModal() {
-            document.getElementById('modalRetiro').style.display = 'flex';
-        }
-
-        function cerrarModal() {
-            document.getElementById('modalRetiro').style.display = 'none';
-        }
-
-        function procesarRetiro() {
-            let billetera = document.getElementById('billetera').value;
-            let selectMetodo = document.getElementById('metodo');
-            let metodoElegido = selectMetodo.options[selectMetodo.selectedIndex].text;
-
-            if (billetera === '') {
-                mostrarToast('âš ï¸ Ingresa tu cuenta de retiro');
-                return;
-            }
-            if (miSaldo >= 1.00) {
-                mostrarToast('âœ… Â¡Ã‰xito! Retiro en proceso');
-                
-                // ðŸ—£ï¸ Â¡Momento del Chisme de Retiro!
-                let totalAEnviar = (miSaldo - 0.02).toFixed(2);
-                let mensajeRetiro = `ðŸ”” Â¡NUEVO RETIRO SOLICITADO! ðŸ’¸
-ðŸ‘¤ Usuario: ${obtenerUsuario()}
-ðŸ’° Monto ganado: $${miSaldo.toFixed(2)}
-ðŸ¦ MÃ©todo: ${metodoElegido}
-ðŸ”— Billetera: ${billetera}
-
-âœ… TOTAL A ENVIAR: ${totalAEnviar}
-ðŸ“‰ ComisiÃ³n: -$0.02`;
-                enviarChisme(mensajeRetiro);
-
-                // Descontamos el saldo para que no cobren dos veces y guardamos
-                miSaldo = 0.000;
-                document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
-                guardarEnNube();
-
-                cerrarModal();
-                document.getElementById('billetera').value = ''; // Limpiar el input
-            } else {
-                mostrarToast('â³ Faltan fondos (MÃ­nimo $1.00)');
-            }
-        }
-
-        // ðŸŽ¯ Motor que procesa la recompensa
-        function registrarVideoVisto() {
-            videosVistos++;
-            
+        // 🧠 ACTUALIZADOR INTELIGENTE DEL BOTÓN Y LA BARRA
+        function actualizarInterfazBoton() {
+            let btn = document.getElementById('btn-reclamar-premio');
             let porcentaje = (videosVistos / metaVideos) * 100;
             document.getElementById('barra-color').style.width = porcentaje + '%';
-            document.getElementById('texto-meta').innerText = `Meta para $${premio}: ${videosVistos}/${metaVideos} videos ðŸŽ¯`;
+            document.getElementById('texto-meta').innerText = `Progreso para recompensa: ${videosVistos}/${metaVideos} 🎯`;
 
-            // ðŸ—£ï¸ Â¡Chisme de Progreso cuando llegan a 10 videos (la mitad)!
-            if (videosVistos === 10) {
-                let mensajeProgreso = `ðŸ“Š Â¡ALGUIEN ESTÃ VIENDO TV! ðŸ¿
-ðŸ‘¤ Usuario: ${obtenerUsuario()}
-ðŸŽ¯ Progreso: ${videosVistos}/${metaVideos} videos vistos.
-ðŸ’µ Saldo actual acumulado: $${miSaldo.toFixed(2)}`;
-                enviarChisme(mensajeProgreso);
+            if (!reclamoGratisHecho) {
+                // Estado 1: Regalo inicial de Dopamina
+                btn.disabled = false;
+                btn.classList.add('latir');
+                btn.innerHTML = '<i class="fas fa-gift"></i> RECLAMAR REGALO $0.01';
+            } else if (videosVistos >= metaVideos) {
+                // Estado 3: Meta cumplida, listo para reclamar
+                btn.disabled = false;
+                btn.classList.add('latir');
+                btn.innerHTML = '<i class="fas fa-coins"></i> RECLAMAR $0.01';
+            } else {
+                // Estado 2: Viendo videos, botón bloqueado
+                btn.disabled = true;
+                btn.classList.remove('latir');
+                btn.innerHTML = '<i class="fas fa-tv"></i> VIENDO TV...';
             }
+        }
 
-            if (videosVistos >= metaVideos) {
-                miSaldo = miSaldo + premio;
+        // ✨ ANIMACIÓN DE SALDO
+        function animarSaldo() {
+            let textoSaldo = document.getElementById('saldo-actual').parentElement;
+            textoSaldo.classList.add('dinero-sube');
+            setTimeout(() => {
+                textoSaldo.classList.remove('dinero-sube');
+            }, 600);
+        }
+
+        // 🎁 LA MAGIA DEL RECLAMO
+        function ejecutarReclamo() {
+            if (!reclamoGratisHecho) {
+                // Da el regalo inicial instantáneo
+                miSaldo += premio;
+                reclamoGratisHecho = true;
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
-                
-                mostrarToast(`Â¡Genial! +$${premio} aÃ±adido ðŸŽ‰`);
-
-                videosVistos = 0;
-                setTimeout(function(){
-                    document.getElementById('barra-color').style.width = '0%';
-                    document.getElementById('texto-meta').innerText = `Meta para $${premio}: 0/${metaVideos} videos ðŸŽ¯`;
-                }, 1000);
+                animarSaldo();
+                mostrarToast('¡Regalo de bienvenida reclamado! 🎉');
+            } else if (videosVistos >= metaVideos) {
+                // Da la recompensa trabajada
+                miSaldo += premio;
+                videosVistos = 0; // Reinicia la barra a cero
+                document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                animarSaldo();
+                mostrarToast('¡Recompensa reclamada con éxito! 💰');
             }
+            
+            actualizarInterfazBoton();
             guardarEnNube();
         }
 
-        // ðŸŽ¬ Lanzador Oficial de Monetag
-        let anuncioCargando = false; // Bandera para evitar disparos locos
+        // 🎬 EL RELOJ AUTOMÁTICO DE FONDO
+        let anuncioCargando = false; 
+        function lanzarAnuncioAutomatico() {
+            // Solo muestra anuncio si la barra aún no está llena y si ya cobró su regalo inicial
+            if (videosVistos < metaVideos && reclamoGratisHecho && !anuncioCargando) {
+                anuncioCargando = true;
+                if (typeof show_11937394 === 'function') {
+                    show_11937394().then(() => {
+                        videosVistos++;
+                        actualizarInterfazBoton();
+                        guardarEnNube();
+                        anuncioCargando = false;
+                        
+                        if(videosVistos === 10) {
+                            enviarChisme(`📊 ¡ALGUIEN ESTÁ VIENDO TV! 🍿\n👤 Usuario: ${obtenerUsuario()}\n🎯 Progreso: 10/20 videos vistos.\n💵 Saldo: $${miSaldo.toFixed(2)}`);
+                        }
+                    }).catch(err => {
+                        console.log("Anuncio no disponible", err);
+                        videosVistos++; // Protegemos el avance
+                        actualizarInterfazBoton();
+                        guardarEnNube();
+                        setTimeout(() => { anuncioCargando = false; }, 3000); 
+                    });
+                } else {
+                     videosVistos++;
+                     actualizarInterfazBoton();
+                     guardarEnNube();
+                     anuncioCargando = false;
+                }
+            }
+        }
+
+        // Modal Retiros
+        function abrirModal() { document.getElementById('modalRetiro').style.display = 'flex'; }
+        function cerrarModal() { document.getElementById('modalRetiro').style.display = 'none'; }
         
-        function lanzarAnuncio() {
-            if (typeof show_11937394 === 'function' && !anuncioCargando) {
-                anuncioCargando = true; // Bloquea nuevos lanzamientos mientras este ocurre
-                
-                show_11937394().then(() => {
-                    registrarVideoVisto();
-                    anuncioCargando = false; // Libera el candado
-                }).catch(err => {
-                    console.log("Anuncio cargando o no disponible", err);
-                    // Si falla por algo (como un enlace que abre), se libera el candado 
-                    // despuÃ©s de un par de segundos para intentar de nuevo luego
-                    setTimeout(() => { anuncioCargando = false; }, 3000); 
-                });
+        function procesarRetiro() {
+            let billetera = document.getElementById('billetera').value;
+            let selectMetodo = document.getElementById('metodo');
+            if (billetera === '') return mostrarToast('⚠️ Ingresa tu cuenta');
+            
+            if (miSaldo >= 1.00) {
+                mostrarToast('✅ ¡Éxito! Retiro en proceso');
+                let total = (miSaldo - 0.02).toFixed(2);
+                enviarChisme(`🔔 ¡NUEVO RETIRO SOLICITADO! 💸\n👤 Usuario: ${obtenerUsuario()}\n💰 Monto: $${miSaldo.toFixed(2)}\n🏦 Método: ${selectMetodo.options[selectMetodo.selectedIndex].text}\n🔗 Billetera: ${billetera}\n\n✅ TOTAL A ENVIAR: ${total}\n📉 Comisión: -$0.02`);
+                miSaldo = 0;
+                document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                guardarEnNube();
+                cerrarModal();
+                document.getElementById('billetera').value = ''; 
+            } else {
+                mostrarToast('⏳ Faltan fondos (Mínimo $1.00)');
             }
         }
 
         cargarDeNube(); 
         
-        // â±ï¸ AQUÃ ESTÃ EL CAMBIO PARA LOS ANUNCIOS LOCOS: 
-        // CambiÃ© de 15 segundos (15000) a 3 MINUTOS (180000). 
-        // Esto le da a Monetag el tiempo exacto y perfecto para respirar y preparar un anuncio bien pagado.
-        setInterval(lanzarAnuncio, 180000); 
+        // ⏱️ Vuelve el sistema automático de fondo cada 15s (cambiar a 180000 luego)
+        setInterval(lanzarAnuncioAutomatico, 15000); 
 
     </script>
 </body>
