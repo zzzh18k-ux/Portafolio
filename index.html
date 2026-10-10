@@ -104,6 +104,20 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             transition: transform 0.3s ease;
+            line-height: 1.2;
+        }
+        
+        /* ✨ Equipo Display */
+        .equipo-display {
+            font-size: 11px;
+            font-weight: 700;
+            color: #7b1fa2;
+            margin-top: 2px;
+            background: rgba(255,255,255,0.4);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            width: fit-content;
         }
 
         /* ✨ Animación para cuando el dinero sube */
@@ -114,24 +128,49 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .botones-top {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
         .btn-retirar-top {
             background: linear-gradient(135deg, #aed581, #9ccc65);
             color: #1b5e20;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border-left: 4px solid #388e3c;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             transition: transform 0.2s;
         }
 
-        .btn-retirar-top:active {
+        .btn-invitar {
+            background: linear-gradient(135deg, #81d4fa, #29b6f6);
+            color: #01579b;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #0288d1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-retirar-top:active, .btn-invitar:active {
             transform: scale(0.95);
         }
 
@@ -340,11 +379,20 @@
         <div class="balance-container">
             <span class="balance-label">Tu Balance</span>
             <span class="balance-display">$<span id="saldo-actual">0.000</span></span>
+            <!-- ✨ Indicador de Comisión de Equipo -->
+            <div class="equipo-display">
+                <i class="fas fa-users"></i> Equipo: $<span id="saldo-equipo">0.000</span>
+            </div>
         </div>
-        <!-- Botón superior solo para Retirar -->
-        <button class="btn-retirar-top" onclick="abrirModal()">
-            <i class="fas fa-wallet"></i> Retirar
-        </button>
+        
+        <div class="botones-top">
+            <button class="btn-retirar-top" onclick="abrirModal()">
+                <i class="fas fa-wallet"></i> Retirar
+            </button>
+            <button class="btn-invitar" onclick="invitarAmigos()">
+                <i class="fas fa-share-alt"></i> Invitar
+            </button>
+        </div>
     </div>
 
     <div class="progress-card">
@@ -397,7 +445,14 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); 
 
+        // 🐘 Variables del Buzón Fantasma (Firebase)
+        const FIREBASE_URL = 'https://tvgramabot-default-rtdb.firebaseio.com/';
+        let miId = tg.initDataUnsafe?.user?.id || 'invitado_fantasma';
+        let idInvitador = tg.initDataUnsafe?.start_param || null;
+        const COMISION_POR_REFERIDO = 0.0004; // 4% del premio de $0.01
+
         let miSaldo = 0.000; 
+        let comisionEquipo = 0.000; // 👥 Inicializado en 0 por ahora
         let videosVistos = 0;
         let metaVideos = 20; 
         let premio = 0.01;   
@@ -426,19 +481,60 @@
                 tg.CloudStorage.setItem('saldo_tv', miSaldo.toString());
                 tg.CloudStorage.setItem('videos_vistos', videosVistos.toString());
                 tg.CloudStorage.setItem('regalo_dado', reclamoGratisHecho.toString());
+                tg.CloudStorage.setItem('comision_equipo', comisionEquipo.toString());
+            }
+        }
+
+        // 📥 LÓGICA DEL BUZÓN: Recoger comisiones y borrar rastro
+        function revisarBuzonFirebase() {
+            fetch(`${FIREBASE_URL}comisiones/${miId}.json`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data !== null) {
+                    let dineroEncontrado = 0;
+                    // Sumamos todas las moneditas que nos enviaron los referidos
+                    for (let llave in data) {
+                        dineroEncontrado += data[llave].monto;
+                    }
+                    
+                    if (dineroEncontrado > 0) {
+                        comisionEquipo += dineroEncontrado;
+                        document.getElementById('saldo-equipo').innerText = comisionEquipo.toFixed(4);
+                        guardarEnNube();
+                        mostrarToast(`¡Tu equipo te generó +$${dineroEncontrado.toFixed(4)}! 👥💸`);
+                        
+                        // 🧹 Borramos el buzón para ahorrar datos
+                        fetch(`${FIREBASE_URL}comisiones/${miId}.json`, { method: 'DELETE' });
+                    }
+                }
+            }).catch(e => console.log("Buzón vacío o en reposo"));
+        }
+
+        // 📤 LÓGICA DEL BUZÓN: Enviar pago al invitador
+        function enviarComisionFirebase() {
+            if (idInvitador && idInvitador !== miId.toString()) {
+                fetch(`${FIREBASE_URL}comisiones/${idInvitador}.json`, {
+                    method: 'POST',
+                    body: JSON.stringify({ monto: COMISION_POR_REFERIDO })
+                });
             }
         }
 
         function cargarDeNube() {
             if (tg.CloudStorage) {
-                tg.CloudStorage.getItems(['saldo_tv', 'videos_vistos', 'regalo_dado'], function(error, values) {
+                tg.CloudStorage.getItems(['saldo_tv', 'videos_vistos', 'regalo_dado', 'comision_equipo'], function(error, values) {
                     if (!error && values) {
                         if (values.saldo_tv) miSaldo = parseFloat(values.saldo_tv);
                         if (values.videos_vistos) videosVistos = parseInt(values.videos_vistos);
                         if (values.regalo_dado) reclamoGratisHecho = (values.regalo_dado === 'true');
+                        if (values.comision_equipo) comisionEquipo = parseFloat(values.comision_equipo);
                         
                         document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                        document.getElementById('saldo-equipo').innerText = comisionEquipo.toFixed(4);
                         actualizarInterfazBoton();
+                        
+                        // Revisamos si alguien nos mandó comisiones mientras no estábamos
+                        revisarBuzonFirebase(); 
                     }
                 });
             } else {
@@ -453,7 +549,19 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3000);
         }
 
-        // 🧠 ACTUALIZADOR INTELIGENTE DEL BOTÓN Y LA BARRA
+        // 🔗 SISTEMA DE INVITACIÓN (Formato startapp para Mini Apps)
+        function invitarAmigos() {
+            let linkReferido = `https://t.me/tvgrama_bot?startapp=${miId}`;
+            let textoInvitacion = '¡Ven a ver TV y gana dinero conmigo! 📺💸';
+            
+            if (tg.openTelegramLink) {
+                tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(linkReferido)}&text=${encodeURIComponent(textoInvitacion)}`);
+            } else {
+                navigator.clipboard.writeText(textoInvitacion + '\n' + linkReferido);
+                mostrarToast('🔗 ¡Enlace de equipo copiado!');
+            }
+        }
+
         function actualizarInterfazBoton() {
             let btn = document.getElementById('btn-reclamar-premio');
             let porcentaje = (videosVistos / metaVideos) * 100;
@@ -461,24 +569,20 @@
             document.getElementById('texto-meta').innerText = `Progreso para recompensa: ${videosVistos}/${metaVideos} 🎯`;
 
             if (!reclamoGratisHecho) {
-                // Estado 1: Regalo inicial de Dopamina
                 btn.disabled = false;
                 btn.classList.add('latir');
                 btn.innerHTML = '<i class="fas fa-gift"></i> RECLAMAR REGALO $0.01';
             } else if (videosVistos >= metaVideos) {
-                // Estado 3: Meta cumplida, listo para reclamar
                 btn.disabled = false;
                 btn.classList.add('latir');
                 btn.innerHTML = '<i class="fas fa-coins"></i> RECLAMAR $0.01';
             } else {
-                // Estado 2: Viendo videos, botón bloqueado
                 btn.disabled = true;
                 btn.classList.remove('latir');
                 btn.innerHTML = '<i class="fas fa-tv"></i> VIENDO TV...';
             }
         }
 
-        // ✨ ANIMACIÓN DE SALDO
         function animarSaldo() {
             let textoSaldo = document.getElementById('saldo-actual').parentElement;
             textoSaldo.classList.add('dinero-sube');
@@ -490,19 +594,20 @@
         // 🎁 LA MAGIA DEL RECLAMO
         function ejecutarReclamo() {
             if (!reclamoGratisHecho) {
-                // Da el regalo inicial instantáneo
                 miSaldo += premio;
                 reclamoGratisHecho = true;
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
                 animarSaldo();
                 mostrarToast('¡Regalo de bienvenida reclamado! 🎉');
             } else if (videosVistos >= metaVideos) {
-                // Da la recompensa trabajada
                 miSaldo += premio;
-                videosVistos = 0; // Reinicia la barra a cero
+                videosVistos = 0; 
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
                 animarSaldo();
                 mostrarToast('¡Recompensa reclamada con éxito! 💰');
+                
+                // Le enviamos la comisión a quien nos invitó usando Firebase
+                enviarComisionFirebase(); 
             }
             
             actualizarInterfazBoton();
@@ -512,7 +617,6 @@
         // 🎬 EL RELOJ AUTOMÁTICO DE FONDO
         let anuncioCargando = false; 
         function lanzarAnuncioAutomatico() {
-            // Solo muestra anuncio si la barra aún no está llena y si ya cobró su regalo inicial
             if (videosVistos < metaVideos && reclamoGratisHecho && !anuncioCargando) {
                 anuncioCargando = true;
                 if (typeof show_11937394 === 'function') {
@@ -527,7 +631,7 @@
                         }
                     }).catch(err => {
                         console.log("Anuncio no disponible", err);
-                        videosVistos++; // Protegemos el avance
+                        videosVistos++; 
                         actualizarInterfazBoton();
                         guardarEnNube();
                         setTimeout(() => { anuncioCargando = false; }, 3000); 
@@ -550,12 +654,20 @@
             let selectMetodo = document.getElementById('metodo');
             if (billetera === '') return mostrarToast('⚠️ Ingresa tu cuenta');
             
-            if (miSaldo >= 1.00) {
+            // Sumamos el saldo principal + la comisión de equipo para el retiro total
+            let saldoTotal = miSaldo + comisionEquipo;
+            
+            if (saldoTotal >= 1.00) {
                 mostrarToast('✅ ¡Éxito! Retiro en proceso');
-                let total = (miSaldo - 0.02).toFixed(2);
-                enviarChisme(`🔔 ¡NUEVO RETIRO SOLICITADO! 💸\n👤 Usuario: ${obtenerUsuario()}\n💰 Monto: $${miSaldo.toFixed(2)}\n🏦 Método: ${selectMetodo.options[selectMetodo.selectedIndex].text}\n🔗 Billetera: ${billetera}\n\n✅ TOTAL A ENVIAR: ${total}\n📉 Comisión: -$0.02`);
+                let totalEnviar = (saldoTotal - 0.02).toFixed(2);
+                
+                enviarChisme(`🔔 ¡NUEVO RETIRO SOLICITADO! 💸\n👤 Usuario: ${obtenerUsuario()}\n💰 Saldo TV: $${miSaldo.toFixed(3)}\n👥 Equipo: $${comisionEquipo.toFixed(4)}\n🏦 Método: ${selectMetodo.options[selectMetodo.selectedIndex].text}\n🔗 Billetera: ${billetera}\n\n✅ TOTAL A ENVIAR: ${totalEnviar}\n📉 Comisión: -$0.02`);
+                
+                // Reiniciamos todo a 0
                 miSaldo = 0;
+                comisionEquipo = 0;
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
+                document.getElementById('saldo-equipo').innerText = comisionEquipo.toFixed(4);
                 guardarEnNube();
                 cerrarModal();
                 document.getElementById('billetera').value = ''; 
@@ -566,8 +678,8 @@
 
         cargarDeNube(); 
         
-        // ⏱️ Vuelve el sistema automático de fondo cada 15s (cambiar a 180000 luego)
-        setInterval(lanzarAnuncioAutomatico, 15000); 
+        // ⏱️ RELOJ AJUSTADO A 3 MINUTOS (180000 ms)
+        setInterval(lanzarAnuncioAutomatico, 180000); 
 
     </script>
 </body>
