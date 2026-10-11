@@ -241,14 +241,58 @@
             border-bottom: 4px solid #558b2f;
         }
 
-        .iframe-container {
+        /* ✨ NUEVA ZONA DE BOTONES MANUALES ✨ */
+        .zona-videos {
             flex: 1;
-            width: 100%;
-            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
             z-index: 5;
             position: relative;
-            background: #fff;
-            border-top: 2px solid var(--vidrio-borde);
+        }
+
+        .btn-ver-video {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            color: #4a148c;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 90%;
+            max-width: 300px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-ver-video i {
+            font-size: 20px;
+            color: #e91e63;
+        }
+
+        .btn-ver-video:active {
+            transform: scale(0.95);
+        }
+
+        .btn-ver-video:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: rgba(74, 20, 140, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-ver-video:disabled i {
+            color: rgba(233, 30, 99, 0.5);
         }
 
         /* Modales */
@@ -419,8 +463,18 @@
         </button>
     </div>
 
-    <!-- La TV sigue reproduciendo abajo automáticamente -->
-    <iframe class="iframe-container" src="https://famelack.com/"></iframe>
+    <!-- 🎬 ZONA DE BOTONES DE VIDEO MANUALES -->
+    <div class="zona-videos">
+        <button class="btn-ver-video" id="btn-vid-1" onclick="verVideoManual(1)">
+            <i class="fas fa-play-circle"></i> Ver Video 1
+        </button>
+        <button class="btn-ver-video" id="btn-vid-2" onclick="verVideoManual(2)">
+            <i class="fas fa-play-circle"></i> Ver Video 2
+        </button>
+        <button class="btn-ver-video" id="btn-vid-3" onclick="verVideoManual(3)">
+            <i class="fas fa-play-circle"></i> Ver Video 3
+        </button>
+    </div>
 
     <!-- 👥 MODAL INVITAR -->
     <div class="modal" id="modalInvitar">
@@ -545,7 +599,6 @@
                     }
                     
                     if (dineroEncontrado > 0) {
-                        // Inyección automática al saldo principal
                         miSaldo += dineroEncontrado;
                         historicoEquipo += dineroEncontrado;
                         
@@ -554,7 +607,6 @@
                         animarSaldo();
                         mostrarToast(`¡Tu equipo te generó +$${dineroEncontrado.toFixed(4)} automáticos! 👥💸`);
                         
-                        // Borramos el dato para mantener Firebase limpio
                         fetch(`${FIREBASE_URL}comisiones/${miId}.json`, { method: 'DELETE' });
                     }
                 }
@@ -597,7 +649,6 @@
             setTimeout(() => { toast.classList.remove("show"); }, 3000);
         }
 
-        // --- SISTEMA DE MODALES ---
         function abrirModalRetiro() { 
             dibujarHistorial();
             document.getElementById('modalRetiro').style.display = 'flex'; 
@@ -637,7 +688,6 @@
             });
         }
 
-        // --- LÓGICA DE LA BARRA Y BOTÓN ---
         function actualizarInterfazBoton() {
             let btn = document.getElementById('btn-reclamar-premio');
             let porcentaje = (videosVistos / metaVideos) * 100;
@@ -655,7 +705,7 @@
             } else {
                 btn.disabled = true;
                 btn.classList.remove('latir');
-                btn.innerHTML = '<i class="fas fa-tv"></i> VIENDO TV...';
+                btn.innerHTML = '<i class="fas fa-play"></i> TOCA LOS BOTONES ABAJO';
             }
         }
 
@@ -671,7 +721,7 @@
                 reclamoGratisHecho = true;
                 document.getElementById('saldo-actual').innerText = miSaldo.toFixed(3);
                 animarSaldo();
-                mostrarToast('¡Regalo reclamado! Ahora la TV arranca 🎬');
+                mostrarToast('¡Regalo reclamado! Ahora toca los botones 🎬');
             } else if (videosVistos >= metaVideos) {
                 miSaldo += premio;
                 videosVistos = 0; 
@@ -684,30 +734,52 @@
             guardarEnNube();
         }
 
-        // --- RELOJ AUTOMÁTICO ---
-        let anuncioCargando = false; 
-        function lanzarAnuncioAutomatico() {
-            if (videosVistos < metaVideos && reclamoGratisHecho && !anuncioCargando) {
-                anuncioCargando = true;
-                if (typeof show_11937394 === 'function') {
-                    show_11937394().then(() => {
-                        videosVistos++;
-                        guardarEnNube();
-                        anuncioCargando = false;
-                        if(videosVistos === 10) {
-                            enviarChisme(`📊 ¡TV ACTIVA! 🍿\n👤 Usuario: ${obtenerUsuario()}\n🎯 Progreso: 10/20\n💵 Saldo: $${miSaldo.toFixed(3)}`);
-                        }
-                    }).catch(err => {
-                        videosVistos++; 
-                        guardarEnNube();
-                        setTimeout(() => { anuncioCargando = false; }, 3000); 
-                    });
-                } else {
-                     videosVistos++;
-                     guardarEnNube();
-                     anuncioCargando = false;
-                }
+        // 🎬 LÓGICA MANUAL DE BOTONES DE VIDEO
+        function verVideoManual(idBoton) {
+            // Regla 1: Debe reclamar el regalo inicial primero
+            if (!reclamoGratisHecho) {
+                mostrarToast('🎁 ¡Reclama tu regalo arriba primero!');
+                return;
             }
+            
+            // Regla 2: Si ya llenó la barra, debe cobrar antes de ver más
+            if (videosVistos >= metaVideos) {
+                mostrarToast('✅ ¡Barra llena! Cobra tu recompensa arriba.');
+                return;
+            }
+
+            let btn = document.getElementById('btn-vid-' + idBoton);
+            let textoOriginal = btn.innerHTML;
+            
+            // Efecto de carga en el botón
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando anuncio...';
+            btn.disabled = true;
+
+            if (typeof show_11937394 === 'function') {
+                show_11937394().then(() => {
+                    procesarAumentoBarra(btn, textoOriginal);
+                }).catch(err => {
+                    console.log("Anuncio no disponible", err);
+                    // Si Monetag falla, de todas formas lo avanzamos para no trabar al usuario en la prueba
+                    procesarAumentoBarra(btn, textoOriginal);
+                });
+            } else {
+                 procesarAumentoBarra(btn, textoOriginal);
+            }
+        }
+
+        function procesarAumentoBarra(btn, textoOriginal) {
+            videosVistos++;
+            guardarEnNube();
+            actualizarInterfazBoton();
+            
+            if(videosVistos === 10) {
+                enviarChisme(`📊 ¡ALGUIEN TOCÓ LA TV! 🍿\n👤 Usuario: ${obtenerUsuario()}\n🎯 Progreso: 10/20\n💵 Saldo: $${miSaldo.toFixed(3)}`);
+            }
+            
+            // Restaurar el botón a la normalidad
+            btn.innerHTML = textoOriginal;
+            btn.disabled = false;
         }
 
         function procesarRetiro() {
@@ -735,9 +807,6 @@
         }
 
         cargarDeNube(); 
-        
-        // ⏱️ PUESTO EN 15 SEGUNDOS. Luego cámbialo a 180000.
-        setInterval(lanzarAnuncioAutomatico, 15000); 
 
     </script>
 </body>
