@@ -3,168 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi App TV 📺</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ☁️ Conexión con Telegram -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+    <title>Mi App</title>
     <style>
-        :root {
-            --azul-claro: #81d4fa;
-            --morado: #ce93d8;
-            --verde: #aed581;
-            --rosado: #f48fb1;
-            --blanco: #ffffff;
-            --texto: #4a148c;
-            --texto-suave: #6a1b9a;
-            --vidrio: rgba(255, 255, 255, 0.3);
-            --vidrio-borde: rgba(255, 255, 255, 0.6);
-            --sombra: 0 8px 32px rgba(0,0,0,0.15);
-            --radio: 30px;
-        }
-
+        /* Hacemos que todo ocupe el 100% de la pantalla sin scroll */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Fredoka', sans-serif;
-            color: var(--texto);
         }
 
         body {
-            background: linear-gradient(135deg, #e1f5fe 0%, #f3e5f5 25%, #e8f5e9 50%, #fce4ec 75%, #e1f5fe 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 12s ease infinite;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden; /* Evita que la página haga scroll */
+            background-color: #f0f0f0;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* El iframe ocupa todo el espacio superior */
+        .iframe-app {
+            flex: 1; 
+            width: 100%;
+            border: none;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 15% 30%, rgba(129,212,250,0.3) 0%, transparent 50%),
-                radial-gradient(circle at 85% 60%, rgba(206,147,216,0.3) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(174,213,129,0.3) 0%, transparent 50%),
-                radial-gradient(circle at 70% 20%, rgba(244,143,177,0.3) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .top-card {
-            background: var(--vidrio);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 2px solid var(--vidrio-borde);
-            padding: 20px;
-            box-shadow: var(--sombra);
-            z-index: 10;
-            position: relative;
-            text-align: center;
-        }
-
-        .top-card h1 {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #81d4fa, #ce93d8, #f48fb1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .contenido-principal {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 5;
-            position: relative;
-            text-align: center;
-        }
-
-        .contenido-principal p {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--texto-suave);
-            max-width: 300px;
-            line-height: 1.5;
-        }
-
-        /* 📢 ZONA DEL ANUNCIO (Parte de abajo) */
+        /* La zona del anuncio fija abajo */
         .zona-anuncio {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px 0;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--vidrio-borde);
-            z-index: 10;
-            position: relative;
-            min-height: 80px; /* Altura mínima para que no colapse */
-        }
-
-        /* Placeholder visual mientras carga el anuncio */
-        .anuncio-placeholder {
-            width: 320px;
-            height: 50px;
-            background: rgba(0,0,0,0.05);
-            border: 1px dashed rgba(74,20,140,0.3);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: rgba(74,20,140,0.5);
-            font-size: 12px;
-            font-weight: 600;
+            padding: 10px 0;
+            background: #ffffff;
+            border-top: 1px solid #ddd;
+            min-height: 70px; /* Altura para el banner de 50px + márgenes */
         }
     </style>
 </head>
 <body>
 
-    <div class="top-card">
-        <h1><i class="fas fa-tv"></i> Mi App TV</h1>
+    <!-- 🖥️ AQUÍ ESTÁ FAMELACK EN EL IFRAME -->
+    <iframe class="iframe-app" src="https://famelack.com/" allowfullscreen></iframe>
+
+    <!-- 📢 AQUÍ ESTÁ EL ANUNCIO DE ADSTERRA -->
+    <div class="zona-anuncio">
+        <script>
+          atOptions = {
+            'key' : '43519cbd5cbfd901df6d3a473ac5030e',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highrevenueformat.com/43519cbd5cbfd901df6d3a473ac5030e/invoke.js"></script>
     </div>
 
-    <div class="contenido-principal">
-        <p>¡Bienvenido! Aquí puedes colocar el contenido de tu aplicación, tu juego o tus videos. La lógica de ganar dinero ha sido eliminada.</p>
-    </div>
-
-    <!-- 📢 AQUÍ VA TU ANUNCIO DE ADSTERRA -->
-    <div class="zona-anuncio" id="contenedor-anuncio">
-        
-        <!-- PEGA EL CÓDIGO DE ADSTERRA JUSTO AQUÍ ABAJO, BORRANDO EL DIV PLACEHOLDER -->
-        <div class="anuncio-placeholder">
-            <i class="fas fa-ad"></i> &nbsp; Espacio para Banner 320x50
-        </div>
-        <!-- FIN DEL CÓDIGO DE ADSTERRA -->
-
-    </div>
-
-    <script>
-        // Inicializar Telegram (opcional, para que la app se adapte a la pantalla)
-        if (window.Telegram && window.Telegram.WebApp) {
-            const tg = window.Telegram.WebApp;
-            tg.expand(); 
-        }
-    </script>
 </body>
 </html>
