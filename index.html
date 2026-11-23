@@ -194,71 +194,77 @@
             box-shadow: 0 4px 0px var(--pink-soft);
         }
 
-        /* Cuadrícula adaptable para 5 cuadros de videos */
-        .video-steps-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-            margin: 18px 0;
+        /* Lista vertical hacia abajo de VIDEO 1 a VIDEO 5 */
+        .video-steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
         }
         .step-slot {
-            border-radius: 18px;
-            padding: 10px 2px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 20px;
+            padding: 12px 16px;
             transition: all 0.25s ease;
             position: relative;
-            border: 2.5px solid;
+            border: 3px solid;
+        }
+        .step-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         .step-slot.color-1 {
             background: #FFF0F6;
             border-color: var(--pink);
-            box-shadow: 0 4px 0px var(--pink-soft);
+            box-shadow: 0 5px 0px var(--pink-soft);
         }
         .step-slot.color-2 {
             background: #EBFBFF;
             border-color: var(--blue);
-            box-shadow: 0 4px 0px var(--blue-soft);
+            box-shadow: 0 5px 0px var(--blue-soft);
         }
         .step-slot.color-3 {
             background: #FFF9DB;
             border-color: var(--orange);
-            box-shadow: 0 4px 0px var(--orange-soft);
+            box-shadow: 0 5px 0px var(--orange-soft);
         }
         .step-slot.color-4 {
             background: #F8F0FC;
             border-color: var(--purple);
-            box-shadow: 0 4px 0px var(--purple-soft);
+            box-shadow: 0 5px 0px var(--purple-soft);
         }
         .step-slot.color-5 {
             background: #E6FCF5;
             border-color: var(--mint-dark);
-            box-shadow: 0 4px 0px var(--mint-soft);
+            box-shadow: 0 5px 0px var(--mint-soft);
         }
 
         .step-slot.completed {
-            background: linear-gradient(180deg, #D8F5A2 0%, #8CE99A 100%) !important;
+            background: linear-gradient(90deg, #D8F5A2 0%, #8CE99A 100%) !important;
             border-color: #2B8A3E !important;
-            box-shadow: 0 4px 0px #B2F2BB !important;
+            box-shadow: 0 5px 0px #B2F2BB !important;
         }
         .step-slot.active-next {
             animation: bounceCute 1.4s infinite;
         }
         @keyframes bounceCute {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.03); }
+            50% { transform: translateY(-4px) scale(1.02); }
         }
 
         .step-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 12px;
-            margin: 0 auto 5px;
+            width: 36px;
+            height: 36px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 15px;
             background: var(--white);
-            border: 2px solid currentColor;
+            border: 2.5px solid currentColor;
         }
         .color-1 .step-icon { color: var(--pink); }
         .color-2 .step-icon { color: var(--blue); }
@@ -272,15 +278,22 @@
             border-color: #FFF;
         }
         .step-label {
-            font-size: 11px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-cute);
+            letter-spacing: 0.4px;
         }
-        .step-reward {
-            font-size: 9px;
+        .step-status-pill {
+            font-size: 11px;
             font-weight: 700;
-            color: var(--pink);
-            margin-top: 2px;
+            padding: 4px 10px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--text-soft);
+        }
+        .step-slot.completed .step-status-pill {
+            background: #2B8A3E;
+            color: #FFFFFF;
         }
 
         .progress-track {
@@ -337,26 +350,6 @@
             box-shadow: 0 4px 0px var(--purple-soft);
             cursor: not-allowed;
             text-shadow: none;
-        }
-
-        .input-deluxe {
-            width: 100%;
-            height: 56px;
-            border-radius: 20px;
-            border: 3px solid var(--blue);
-            background: #F8FDFF;
-            padding: 0 16px;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-cute);
-            outline: none;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 0px var(--blue-soft);
-        }
-        .input-deluxe:focus {
-            border-color: var(--pink);
-            background: #FFFFFF;
-            box-shadow: 0 4px 0px var(--pink-soft);
         }
 
         .bottom-nav {
@@ -501,7 +494,7 @@
             </div>
             <div style="font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase;">✨ ¡Recompensa Variada! ✨</div>
             <h3 id="modal-reward-amount" style="font-size: 30px; font-weight: 700; color: var(--pink); margin: 6px 0;">+$0.00040 USDT</h3>
-            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-bottom: 20px;">¡Sumados directamente a tu saldo USDT para Binance Pay!</p>
+            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-bottom: 20px;">¡Sumados directamente a tu saldo USDT!</p>
             <button class="btn-3d" onclick="closeRewardModal()">
                 <i class="fa-solid fa-heart"></i> ¡Yuju, Gracias!
             </button>
@@ -515,7 +508,7 @@
                 <div class="avatar-circle" id="ui-avatar">U</div>
                 <div>
                     <div style="font-size: 17px; font-weight: 700;" id="ui-username">¡Hola!</div>
-                    <div style="font-size: 12px; font-weight: 600; color: var(--purple);">✨ Reparto 30% a 50%</div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--purple);">✨ Saldo USDT</div>
                 </div>
             </div>
             <div class="daily-pill">
@@ -541,12 +534,9 @@
                     ¡Listos!
                 </span>
             </div>
-            <p style="font-size: 13px; color: var(--text-soft); font-weight: 600;">
-                Completa tus 5 videos diarios y gana premios variados del 30% al 50%:
-            </p>
 
-            <!-- 5 Bloques Multicolor -->
-            <div class="video-steps-grid" id="steps-container"></div>
+            <!-- Lista vertical hacia abajo: VIDEO 1 a VIDEO 5 -->
+            <div class="video-steps-list" id="steps-container"></div>
 
             <!-- Barra de Progreso Arcoíris -->
             <div class="progress-track">
@@ -555,38 +545,21 @@
 
             <!-- Botón Principal -->
             <button class="btn-3d" id="btn-watch-video" onclick="watchDailyVideo()">
-                <i class="fa-solid fa-play"></i> VER VIDEO (1 / 5)
+                <i class="fa-solid fa-play"></i> VER VIDEO 1 (1 / 5)
             </button>
         </div>
     </section>
 
-    <!-- PANTALLA 2: INVITAR AMIGOS -->
+    <!-- PANTALLA 2: INVITAR (EN MANTENIMIENTO) -->
     <section id="screen-invite" class="view-section">
-        <div class="cute-card rainbow-hero" style="text-align: center;">
-            <div style="width: 60px; height: 60px; border-radius: 22px; background: var(--white); border: 3px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--purple); margin: 0 auto 10px; box-shadow: 0 5px 0px var(--purple-soft);">
-                <i class="fa-solid fa-user-group"></i>
+        <div class="cute-card rainbow-hero" style="text-align: center; padding: 32px 20px;">
+            <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--white); border: 3.5px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 32px; color: #0088CC; margin: 0 auto 14px; box-shadow: 0 6px 0px var(--blue-soft);">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
-            <h2 style="font-size: 22px; font-weight: 700;">¡Invita Amigos y Gana 10%!</h2>
-            <p style="font-size: 13px; color: var(--text-cute); font-weight: 600; margin-top: 4px;">Recibe el 10% en USDT de todos los anuncios que vean tus amigos.</p>
-        </div>
-
-        <div class="cute-card" style="border-color: var(--blue); box-shadow: 0 9px 0px var(--blue-soft);">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                <div style="background: #FFF0F6; border: 3px solid var(--pink); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 0px var(--pink-soft);">
-                    <div style="font-size: 24px; font-weight: 700; color: var(--pink);" id="ui-ref-count">0</div>
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text-soft);">Amiguitos</div>
-                </div>
-                <div style="background: #E6FCF5; border: 3px solid var(--mint-dark); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 0px var(--mint-soft);">
-                    <div style="font-size: 20px; font-weight: 700; color: #099268;" id="ui-ref-commission">$0.00000</div>
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text-soft);">Ganado USDT</div>
-                </div>
-            </div>
-
-            <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">TU ENLACE MÁGICO:</div>
-            <input type="text" id="ui-ref-link" class="input-deluxe" readonly value="Cargando...">
-            <button class="btn-3d" onclick="copyReferralLink()">
-                <i class="fa-solid fa-copy"></i> Copiar Mi Enlace
-            </button>
+            <h2 style="font-size: 22px; font-weight: 700; color: var(--text-cute);">Invitar en Mantenimiento</h2>
+            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-top: 8px; line-height: 1.5;">
+                Estamos afinando los detalles de invitaciones para que funcione súper bien. ¡Vuelve pronto! 🛠️✨
+            </p>
         </div>
     </section>
 
@@ -594,37 +567,24 @@
     <section id="screen-history" class="view-section">
         <div class="cute-card" style="border-color: var(--orange); box-shadow: 0 9px 0px var(--orange-soft);">
             <div style="font-size: 19px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; color: #D97706;">
-                <i class="fa-solid fa-star" style="color: var(--orange);"></i> Mis Pagos y Videos
+                <i class="fa-solid fa-star" style="color: var(--orange);"></i> Mis Premios USDT
             </div>
             <div id="ui-history-list"></div>
         </div>
     </section>
 
-    <!-- PANTALLA 4: RETIRAR POR BINANCE PAY -->
+    <!-- PANTALLA 4: RETIRAR (EN MANTENIMIENTO + PANEL ADMIN OCULTO) -->
     <section id="screen-withdraw" class="view-section">
-        <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center;">
-            <div class="balance-title">Saldo Listo para Retirar</div>
+        <!-- Mantener presionado 5 segundos abre el Panel Admin -->
+        <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center; padding: 28px 20px;">
+            <div style="width: 68px; height: 68px; border-radius: 22px; background: var(--white); border: 3.5px solid var(--mint-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; color: #099268; margin: 0 auto 12px; box-shadow: 0 6px 0px var(--mint-soft);">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+            <div class="balance-title">Retiros en Mantenimiento</div>
             <div class="balance-main-num">$<span id="ui-withdraw-usdt">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
-            <div class="balance-usdt-pill">Envío directo sin comisión por Binance Pay</div>
-        </div>
-
-        <div class="cute-card" style="border-color: var(--mint-dark); box-shadow: 0 9px 0px var(--mint-soft);">
-            <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #099268;">
-                <i class="fa-solid fa-bolt" style="color: var(--orange);"></i> Retirar mi Saldo a Binance Pay
-            </div>
-
-            <div style="background: #FFF9DB; border: 3px solid var(--orange); border-radius: 20px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--text-cute); line-height: 1.7;">
-                <div style="display:flex; justify-content:space-between;"><span>Mínimo (~8 videos):</span> <strong style="color:var(--pink);">$0.00300 USDT</strong></div>
-                <div style="display:flex; justify-content:space-between;"><span>Comisión Binance:</span> <strong style="color:#099268;">¡Gratis! ($0.00)</strong></div>
-                <div style="display:flex; justify-content:space-between;"><span>Tiempo de envío:</span> <strong style="color:var(--purple);">Cada 24 horas</strong></div>
-            </div>
-
-            <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">TU BINANCE ID O CORREO:</div>
-            <input type="text" id="input-binance-id" class="input-deluxe" placeholder="Ej: 548920192 o correo@gmail.com">
-
-            <button class="btn-3d" onclick="submitBinanceWithdraw()">
-                <i class="fa-solid fa-paper-plane"></i> Pedir Mi Pago en USDT
-            </button>
+            <p style="font-size: 13px; color: var(--text-cute); font-weight: 600; margin-top: 8px; line-height: 1.45;">
+                El botón de retiro está en mantenimiento temporal mientras preparamos todo. Tu saldo queda seguro 🛠️💖
+            </p>
         </div>
 
         <!-- PANEL ADMIN OCULTO -->
@@ -644,7 +604,7 @@
         </button>
         <button class="nav-tab tab-2" onclick="navTo('invite', this)">
             <i class="fa-solid fa-user-group"></i>
-            <span>Amigos</span>
+            <span>Invitar</span>
         </button>
         <button class="nav-tab tab-3" onclick="navTo('history', this)">
             <i class="fa-solid fa-star"></i>
@@ -678,20 +638,15 @@
     const MAX_PORCENTAJE_USUARIO = 0.50;
     const MIN_USDT_RETIRO = 0.00300;
 
-    // Configuración para 5 videos diarios
     const MAX_VIDEOS_DIARIOS = 5;
     const CICLO_24H_MS = 24 * 60 * 60 * 1000;
     const PAUSA_ENTRE_VIDEOS_SEG = 60;
-    const BOT_LINK = "https://t.me/basket24ballbot";
 
     let USER_ID = "demo_user";
     let USER_DATA = {
         usdtBalance: 0,
         videosWatched: 0,
         cycleResetAt: 0,
-        referidos: [],
-        referidoPor: null,
-        comisionUsdt: 0,
         historial: [],
         pendientes: []
     };
@@ -731,7 +686,7 @@
         icon.className = isError ? "fa-solid fa-circle-exclamation" : "fa-solid fa-star";
         icon.style.color = isError ? "#FF4D94" : "#FF9F1C";
         box.classList.add('show');
-        setTimeout(() => box.classList.remove('show'), 3000);
+        setTimeout(() => box.classList.remove('show'), 3200);
     }
 
     function checkCycleReset() {
@@ -751,7 +706,6 @@
 
         document.getElementById('ui-username').innerText = `¡Hola, ${firstName}!`;
         document.getElementById('ui-avatar').innerText = firstName.charAt(0).toUpperCase();
-        document.getElementById('ui-ref-link').value = `${BOT_LINK}?startapp=${USER_ID}`;
 
         try {
             const doc = await db.collection('usuarios').doc(USER_ID).get();
@@ -760,9 +714,6 @@
                 USER_DATA.usdtBalance = d.usdtBalance !== undefined ? d.usdtBalance : 0;
                 USER_DATA.videosWatched = d.videosWatched || 0;
                 USER_DATA.cycleResetAt = d.cycleResetAt || 0;
-                USER_DATA.referidos = d.referidos || [];
-                USER_DATA.referidoPor = d.referidoPor || null;
-                USER_DATA.comisionUsdt = d.comisionUsdt || 0;
                 USER_DATA.historial = d.historial || [];
                 USER_DATA.pendientes = d.pendientes || [];
             } else {
@@ -773,8 +724,6 @@
                     usdtBalance: 0,
                     videosWatched: 0,
                     cycleResetAt: 0,
-                    referidos: [],
-                    comisionUsdt: 0,
                     historial: [],
                     pendientes: []
                 });
@@ -801,13 +750,13 @@
 
         const falta = Math.max(0, MIN_USDT_RETIRO - usdt);
         document.getElementById('ui-min-progress').innerText = falta === 0
-            ? "✨ ¡Ya puedes retirar a tu Binance Pay!"
-            : `Te faltan $${falta.toFixed(5)} USDT para retirar (Mín: $${MIN_USDT_RETIRO.toFixed(4)})`;
+            ? "✨ ¡Mínimo de $0.00300 USDT alcanzado!"
+            : `Mínimo de retiro: $0.00300 USDT (~8 videos)`;
 
         const pct = Math.min(100, (watched / MAX_VIDEOS_DIARIOS) * 100);
         document.getElementById('ui-progress-bar').style.width = `${pct}%`;
 
-        // Renderizado dinámico de los 5 cuadros
+        // Lista vertical hacia abajo: VIDEO 1 a VIDEO 5
         const stepsContainer = document.getElementById('steps-container');
         let htmlSteps = '';
         for (let i = 1; i <= MAX_VIDEOS_DIARIOS; i++) {
@@ -815,21 +764,21 @@
             const isNext = i === watched + 1;
             const stateClass = isDone ? 'completed' : (isNext ? 'active-next' : '');
             const iconClass = isDone ? 'fa-check' : (isNext ? 'fa-play' : 'fa-heart');
+            const statusText = isDone ? 'LISTO' : (isNext ? 'SIGUIENTE' : 'PENDIENTE');
 
             htmlSteps += `
                 <div class="step-slot color-${i} ${stateClass}">
-                    <div class="step-icon"><i class="fa-solid ${iconClass}"></i></div>
-                    <div class="step-label">Video ${i}</div>
-                    <div class="step-reward">30% - 50%</div>
+                    <div class="step-left">
+                        <div class="step-icon"><i class="fa-solid ${iconClass}"></i></div>
+                        <div class="step-label">VIDEO ${i}</div>
+                    </div>
+                    <div class="step-status-pill">${statusText}</div>
                 </div>
             `;
         }
         stepsContainer.innerHTML = htmlSteps;
 
         updateActionButtonState();
-
-        document.getElementById('ui-ref-count').innerText = (USER_DATA.referidos || []).length;
-        document.getElementById('ui-ref-commission').innerText = `$${(USER_DATA.comisionUsdt || 0).toFixed(5)}`;
 
         const hList = document.getElementById('ui-history-list');
         const hist = USER_DATA.historial || [];
@@ -878,8 +827,9 @@
             return;
         }
 
+        const nextNum = watched + 1;
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-play"></i> VER VIDEO (${watched + 1} / ${MAX_VIDEOS_DIARIOS})`;
+        btn.innerHTML = `<i class="fa-solid fa-play"></i> VER VIDEO ${nextNum} (${nextNum} / ${MAX_VIDEOS_DIARIOS})`;
         tag.innerText = "¡Listos!";
     }
 
@@ -903,7 +853,13 @@
         const btn = document.getElementById('btn-watch-video');
         btn.dataset.loading = 'true';
         btn.disabled = true;
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Abriendo anuncio...`;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Buscando anuncio...`;
+
+        const resetBtnWithoutReward = (mensaje) => {
+            btn.dataset.loading = 'false';
+            updateActionButtonState();
+            showToast(mensaje, true);
+        };
 
         const onAdCompleted = async () => {
             btn.dataset.loading = 'false';
@@ -918,7 +874,7 @@
 
             USER_DATA.historial.push({
                 id: Date.now().toString(),
-                titulo: `Anuncio (${USER_DATA.videosWatched}/${MAX_VIDEOS_DIARIOS})`,
+                titulo: `VIDEO ${USER_DATA.videosWatched} (${USER_DATA.videosWatched}/${MAX_VIDEOS_DIARIOS})`,
                 fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 valor: `+$${ganadoUsdt.toFixed(5)} USDT`,
                 estado: 'listo'
@@ -936,11 +892,21 @@
             document.getElementById('reward-modal').classList.add('show');
         };
 
-        // Llamada a la nueva zona 11937394
         if (typeof show_11937394 === 'function') {
-            show_11937394().then(onAdCompleted).catch(onAdCompleted);
+            show_11937394()
+                .then((res) => {
+                    // Si Monetag devuelve que no hubo anuncio o fue cerrado sin completar, no lo da por perdido ni cobra de más
+                    if (res === false || res === null || (typeof res === 'object' && res.status === 'no_ad')) {
+                        resetBtnWithoutReward("Sin anuncio por ahora, intenta de nuevo");
+                        return;
+                    }
+                    onAdCompleted();
+                })
+                .catch(() => {
+                    resetBtnWithoutReward("No hay anuncio disponible ahora, reintenta");
+                });
         } else {
-            setTimeout(onAdCompleted, 1500);
+            resetBtnWithoutReward("Cargando anuncio, intenta en un segundo");
         }
     }
 
@@ -958,46 +924,6 @@
                 pendientes: USER_DATA.pendientes
             });
         } catch (e) {}
-    }
-
-    async function submitBinanceWithdraw() {
-        const binanceId = document.getElementById('input-binance-id').value.trim();
-        if (!binanceId || binanceId.length < 4) {
-            return showToast("Escribe tu Binance ID o correo", true);
-        }
-        if ((USER_DATA.usdtBalance || 0) < MIN_USDT_RETIRO) {
-            return showToast(`Mínimo de retiro: $${MIN_USDT_RETIRO.toFixed(4)} USDT (~8 videos)`, true);
-        }
-
-        const pendienteActivo = (USER_DATA.pendientes || []).find(p => p.estado === 'pendiente');
-        if (pendienteActivo) {
-            return showToast("Ya tienes un retiro en camino", true);
-        }
-
-        const montoUSDT = USER_DATA.usdtBalance.toFixed(5);
-        const solicitud = {
-            id: Date.now().toString(),
-            wallet: binanceId,
-            usdt: montoUSDT,
-            fecha: new Date().toLocaleDateString(),
-            estado: 'pendiente',
-            usuario: USER_ID
-        };
-
-        USER_DATA.usdtBalance = 0;
-        USER_DATA.pendientes.push(solicitud);
-        USER_DATA.historial.push({
-            id: solicitud.id,
-            titulo: `Retiro Binance: ${binanceId}`,
-            fecha: solicitud.fecha,
-            valor: `-$${montoUSDT} USDT`,
-            estado: 'pendiente'
-        });
-
-        await saveUserState();
-        document.getElementById('input-binance-id').value = "";
-        renderAll();
-        showToast("¡Pedido enviado! Llega en 24h");
     }
 
     function setupSecretAdmin() {
@@ -1084,12 +1010,6 @@
             showToast("Error al actualizar", true);
         }
     };
-
-    function copyReferralLink() {
-        const link = document.getElementById('ui-ref-link').value;
-        navigator.clipboard.writeText(link);
-        showToast("¡Enlace mágico copiado!");
-    }
 
     function navTo(screenId, btn) {
         document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
