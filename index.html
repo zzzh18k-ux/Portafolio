@@ -3,61 +3,1113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi App</title>
+    <title>Arcoíris Mágico — USDT Directo</title>
+    
+    <!-- Monetag SDK (Tu Zona 11698149) -->
+    <script src="//libtl.com/sdk.js" data-zone="11698149" data-sdk="show_11698149"></script>
+    
+    <!-- Telegram WebApp & Firebase SDKs -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <!-- Letra Súper Adorable y Redondita (Fredoka) + Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* Hacemos que todo ocupe el 100% de la pantalla sin scroll */
+        :root {
+            --pink: #FF4D94;
+            --pink-soft: #FFD6E8;
+            --purple: #9B5DE5;
+            --purple-soft: #E9D8FD;
+            --blue: #00BBF9;
+            --blue-soft: #CCF2FF;
+            --mint: #00F5D4;
+            --mint-dark: #00BFA5;
+            --mint-soft: #C8FFF4;
+            --yellow: #FEE440;
+            --orange: #FF9F1C;
+            --orange-soft: #FFE8CC;
+            --text-cute: #4A2545;
+            --text-soft: #8A5A83;
+            --white: #FFFFFF;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Fredoka', cursive, sans-serif;
+            user-select: none;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden; /* Evita que la página haga scroll */
-            background-color: #f0f0f0;
-        }
-
-        /* El iframe ocupa todo el espacio superior */
-        .iframe-app {
-            flex: 1; 
-            width: 100%;
-            border: none;
-        }
-
-        /* La zona del anuncio fija abajo */
-        .zona-anuncio {
-            width: 100%;
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFF0F5 20%, #E8F8F5 40%, #FEF9E7 60%, #F3E5F5 80%, #E1F5FE 100%);
+            background-size: 300% 300%;
+            animation: rainbowBg 10s ease infinite;
+            color: var(--text-cute);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 10px 0;
-            background: #ffffff;
-            border-top: 1px solid #ddd;
-            min-height: 70px; /* Altura para el banner de 50px + márgenes */
+            overflow-x: hidden;
         }
+        @keyframes rainbowBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #app-wrapper {
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 110px;
+        }
+
+        .view-section {
+            display: none;
+            flex-direction: column;
+            padding: 18px 16px;
+            animation: popCute 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .view-section.active {
+            display: flex;
+        }
+        @keyframes popCute {
+            0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Tarjetas Kawaii con Bordes Arcoíris 3D */
+        .cute-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 20px;
+            border: 3.5px solid var(--pink);
+            box-shadow: 0 9px 0px var(--pink-soft), 0 14px 30px rgba(255, 77, 148, 0.18);
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cute-card.rainbow-hero {
+            background: linear-gradient(135deg, #FFDEE9 0%, #FFF6B7 35%, #C8FFF4 70%, #E0C3FC 100%);
+            border: 4px solid var(--purple);
+            box-shadow: 0 9px 0px #D0BFFF, 0 16px 35px rgba(155, 93, 229, 0.28);
+        }
+
+        .rainbow-hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 45%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(25deg);
+            animation: shineSweep 4s infinite;
+            pointer-events: none;
+        }
+        @keyframes shineSweep {
+            0% { left: -60%; }
+            35%, 100% { left: 140%; }
+        }
+
+        /* Cabecera Adorable */
+        .profile-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            border: 3.5px solid var(--blue);
+            border-radius: 26px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 0px var(--blue-soft);
+        }
+        .user-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar-circle {
+            width: 46px;
+            height: 46px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--pink), var(--orange), var(--purple));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: 700;
+            border: 3px solid #FFF;
+            box-shadow: 0 4px 10px rgba(255, 77, 148, 0.35);
+        }
+        .daily-pill {
+            background: linear-gradient(135deg, #FFF3B0, #FFE066);
+            border: 2.5px solid var(--orange);
+            color: #9C4100;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 0px var(--orange-soft);
+        }
+
+        /* Saldo Directo en USDT */
+        .balance-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--purple);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .balance-main-num {
+            font-size: 38px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #FF2A85, #9B5DE5, #00BBF9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            filter: drop-shadow(0 2px 0px rgba(255,255,255,0.9));
+        }
+        .balance-usdt-pill {
+            display: inline-block;
+            margin-top: 8px;
+            background: var(--white);
+            border: 3px solid var(--pink);
+            padding: 5px 14px;
+            border-radius: 22px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--pink);
+            box-shadow: 0 4px 0px var(--pink-soft);
+        }
+
+        /* Los 4 Cuadros de Video Multicolor */
+        .video-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+        .step-slot {
+            border-radius: 22px;
+            padding: 14px 4px;
+            text-align: center;
+            transition: all 0.25s ease;
+            position: relative;
+            border: 3px solid;
+        }
+        .step-slot.color-1 {
+            background: #FFF0F6;
+            border-color: var(--pink);
+            box-shadow: 0 6px 0px var(--pink-soft);
+        }
+        .step-slot.color-2 {
+            background: #EBFBFF;
+            border-color: var(--blue);
+            box-shadow: 0 6px 0px var(--blue-soft);
+        }
+        .step-slot.color-3 {
+            background: #FFF9DB;
+            border-color: var(--orange);
+            box-shadow: 0 6px 0px var(--orange-soft);
+        }
+        .step-slot.color-4 {
+            background: #F8F0FC;
+            border-color: var(--purple);
+            box-shadow: 0 6px 0px var(--purple-soft);
+        }
+
+        .step-slot.completed {
+            background: linear-gradient(180deg, #D8F5A2 0%, #8CE99A 100%) !important;
+            border-color: #2B8A3E !important;
+            box-shadow: 0 6px 0px #B2F2BB !important;
+        }
+        .step-slot.active-next {
+            animation: bounceCute 1.4s infinite;
+        }
+        @keyframes bounceCute {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.04); }
+        }
+
+        .step-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            margin: 0 auto 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            background: var(--white);
+            border: 2.5px solid currentColor;
+        }
+        .color-1 .step-icon { color: var(--pink); }
+        .color-2 .step-icon { color: var(--blue); }
+        .color-3 .step-icon { color: var(--orange); }
+        .color-4 .step-icon { color: var(--purple); }
+
+        .step-slot.completed .step-icon {
+            background: #2B8A3E;
+            color: white;
+            border-color: #FFF;
+        }
+        .step-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-cute);
+        }
+        .step-reward {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--pink);
+            margin-top: 2px;
+        }
+
+        /* Barra de Progreso Arcoíris */
+        .progress-track {
+            width: 100%;
+            height: 20px;
+            background: #FFF0F6;
+            border: 3px solid var(--purple);
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 18px;
+            padding: 2px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.06);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF4D94, #FF9F1C, #FEE440, #00F5D4, #00BBF9, #9B5DE5);
+            background-size: 200% 100%;
+            animation: moveRainbow 3s linear infinite;
+            border-radius: 18px;
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes moveRainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Botón Súper Colorido 3D */
+        .btn-3d {
+            width: 100%;
+            min-height: 60px;
+            border-radius: 24px;
+            background: linear-gradient(90deg, #FF4D94 0%, #FF8552 50%, #9B5DE5 100%);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            border: 3.5px solid #6A1B9A;
+            box-shadow: 0 7px 0px #6A1B9A, 0 12px 24px rgba(255, 77, 148, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            text-shadow: 0 2px 0px rgba(0,0,0,0.18);
+        }
+        .btn-3d:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0px #6A1B9A;
+        }
+        .btn-3d:disabled {
+            background: linear-gradient(90deg, #E9D8FD, #FFD6E8);
+            border-color: var(--purple);
+            color: var(--text-cute);
+            box-shadow: 0 4px 0px var(--purple-soft);
+            cursor: not-allowed;
+            text-shadow: none;
+        }
+
+        /* Inputs Adorables */
+        .input-deluxe {
+            width: 100%;
+            height: 56px;
+            border-radius: 20px;
+            border: 3px solid var(--blue);
+            background: #F8FDFF;
+            padding: 0 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-cute);
+            outline: none;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 0px var(--blue-soft);
+        }
+        .input-deluxe:focus {
+            border-color: var(--pink);
+            background: #FFFFFF;
+            box-shadow: 0 4px 0px var(--pink-soft);
+        }
+
+        /* Barra Inferior Multicolor */
+        .bottom-nav {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 26px);
+            max-width: 414px;
+            background: #FFFFFF;
+            border: 3.5px solid var(--purple);
+            border-radius: 30px;
+            box-shadow: 0 8px 0px var(--purple-soft), 0 14px 32px rgba(155, 93, 229, 0.25);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 6px;
+            z-index: 1000;
+        }
+        .nav-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: transparent;
+            border: 2.5px solid transparent;
+            padding: 8px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-soft);
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            width: 24%;
+        }
+        .nav-tab i { font-size: 19px; }
+
+        .nav-tab.tab-1.active {
+            background: #FFF0F6;
+            border-color: var(--pink);
+            color: var(--pink);
+            box-shadow: 0 4px 0px var(--pink-soft);
+        }
+        .nav-tab.tab-2.active {
+            background: #EBFBFF;
+            border-color: var(--blue);
+            color: #0088CC;
+            box-shadow: 0 4px 0px var(--blue-soft);
+        }
+        .nav-tab.tab-3.active {
+            background: #FFF9DB;
+            border-color: var(--orange);
+            color: #D97706;
+            box-shadow: 0 4px 0px var(--orange-soft);
+        }
+        .nav-tab.tab-4.active {
+            background: #E6FCF5;
+            border-color: var(--mint-dark);
+            color: #099268;
+            box-shadow: 0 4px 0px var(--mint-soft);
+        }
+
+        /* Modal Fiesta de Colores */
+        .reward-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 37, 69, 0.65);
+            backdrop-filter: blur(6px);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reward-overlay.show { display: flex; }
+        .reward-popup {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F6 50%, #EBFBFF 100%);
+            border: 4px solid var(--pink);
+            border-radius: 36px;
+            padding: 28px 22px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 10px 0px var(--purple), 0 20px 50px rgba(0,0,0,0.3);
+            animation: bounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Toast Superior */
+        #toast-box {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: var(--white);
+            color: var(--text-cute);
+            border: 3.5px solid var(--pink);
+            box-shadow: 0 6px 0px var(--pink-soft), 0 10px 25px rgba(0,0,0,0.12);
+            padding: 12px 22px;
+            border-radius: 26px;
+            font-size: 14px;
+            font-weight: 700;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+        }
+        #toast-box.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .list-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, #FFF0F6, #F8F0FC, #EBFBFF);
+            border: 2.5px solid var(--pink-soft);
+            border-radius: 20px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+        .oculto { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- 🖥️ AQUÍ ESTÁ FAMELACK EN EL IFRAME -->
-    <iframe class="iframe-app" src="https://famelack.com/" allowfullscreen></iframe>
+<div id="app-wrapper">
 
-    <!-- 📢 AQUÍ ESTÁ EL ANUNCIO DE ADSTERRA -->
-    <div class="zona-anuncio">
-        <script>
-          atOptions = {
-            'key' : '43519cbd5cbfd901df6d3a473ac5030e',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script src="https://www.highrevenueformat.com/43519cbd5cbfd901df6d3a473ac5030e/invoke.js"></script>
+    <!-- Toast de Notificación -->
+    <div id="toast-box">
+        <i id="toast-icon" class="fa-solid fa-star" style="color: var(--orange); font-size: 20px;"></i>
+        <span id="toast-text">¡Listo!</span>
     </div>
 
+    <!-- Modal de Video Completado (Recompensa Variada en USDT) -->
+    <div id="reward-modal" class="reward-overlay">
+        <div class="reward-popup">
+            <div style="width: 78px; height: 78px; border-radius: 26px; background: linear-gradient(135deg, #FF4D94, #FEE440, #00BBF9); color: #FFF; font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; border: 3.5px solid #FFF; box-shadow: 0 6px 15px rgba(255, 77, 148, 0.35);">
+                <i class="fa-solid fa-face-laugh-beam"></i>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase;">✨ ¡Recompensa Variada! ✨</div>
+            <h3 id="modal-reward-amount" style="font-size: 32px; font-weight: 700; color: var(--pink); margin: 6px 0;">+$0.00040 USDT</h3>
+            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-bottom: 20px;">¡Sumados directamente a tu saldo USDT para Binance Pay!</p>
+            <button class="btn-3d" onclick="closeRewardModal()">
+                <i class="fa-solid fa-heart"></i> ¡Yuju, Gracias!
+            </button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 1: 4 VIDEOS CADA 24 HORAS (SOLO USDT) -->
+    <section id="screen-home" class="view-section active">
+        <div class="profile-bar">
+            <div class="user-box">
+                <div class="avatar-circle" id="ui-avatar">U</div>
+                <div>
+                    <div style="font-size: 17px; font-weight: 700;" id="ui-username">¡Hola!</div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--purple);">✨ Reparto 30% a 50%</div>
+                </div>
+            </div>
+            <div class="daily-pill">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--pink);"></i>
+                <span id="ui-videos-badge">0 / 4</span> Hoy
+            </div>
+        </div>
+
+        <!-- Balance Principal Directo en USDT -->
+        <div class="cute-card rainbow-hero" style="text-align: center; padding: 26px 18px;">
+            <div class="balance-title"><i class="fa-solid fa-rainbow"></i> Mi Saldo Disponible</div>
+            <div class="balance-main-num">$<span id="ui-usdt-main">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
+            <div class="balance-usdt-pill" id="ui-min-progress">Mínimo de retiro: $0.00300 USDT (~8 videos)</div>
+        </div>
+
+        <!-- Tarjeta de los 4 Videos cada 24 Horas -->
+        <div class="cute-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 18px; font-weight: 700; color: var(--pink);">
+                    <i class="fa-solid fa-tv"></i> Tus 4 Videos del Día
+                </span>
+                <span id="ui-status-tag" style="background: #EBFBFF; border: 2.5px solid var(--blue); color: #0088CC; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 16px;">
+                    ¡Listos!
+                </span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-soft); font-weight: 600;">
+                Cada video te entrega un premio variado entre el 30% y 50% en USDT:
+            </p>
+
+            <!-- 4 Bloques Multicolor -->
+            <div class="video-steps-grid" id="steps-container"></div>
+
+            <!-- Barra de Progreso Arcoíris -->
+            <div class="progress-track">
+                <div class="progress-fill" id="ui-progress-bar"></div>
+            </div>
+
+            <!-- Botón Principal -->
+            <button class="btn-3d" id="btn-watch-video" onclick="watchDailyVideo()">
+                <i class="fa-solid fa-play"></i> VER VIDEO (1 / 4)
+            </button>
+        </div>
+    </section>
+
+    <!-- PANTALLA 2: INVITAR AMIGOS -->
+    <section id="screen-invite" class="view-section">
+        <div class="cute-card rainbow-hero" style="text-align: center;">
+            <div style="width: 60px; height: 60px; border-radius: 22px; background: var(--white); border: 3px solid var(--purple); display: flex; align-items: center; justify-content: center; font-size: 26px; color: var(--purple); margin: 0 auto 10px; box-shadow: 0 5px 0px var(--purple-soft);">
+                <i class="fa-solid fa-user-group"></i>
+            </div>
+            <h2 style="font-size: 22px; font-weight: 700;">¡Invita Amigos y Gana 10%!</h2>
+            <p style="font-size: 13px; color: var(--text-cute); font-weight: 600; margin-top: 4px;">Recibe el 10% en USDT de todos los anuncios que vean tus amigos.</p>
+        </div>
+
+        <div class="cute-card" style="border-color: var(--blue); box-shadow: 0 9px 0px var(--blue-soft);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div style="background: #FFF0F6; border: 3px solid var(--pink); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 0px var(--pink-soft);">
+                    <div style="font-size: 24px; font-weight: 700; color: var(--pink);" id="ui-ref-count">0</div>
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-soft);">Amiguitos</div>
+                </div>
+                <div style="background: #E6FCF5; border: 3px solid var(--mint-dark); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 0px var(--mint-soft);">
+                    <div style="font-size: 20px; font-weight: 700; color: #099268;" id="ui-ref-commission">$0.00000</div>
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-soft);">Ganado USDT</div>
+                </div>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">TU ENLACE MÁGICO:</div>
+            <input type="text" id="ui-ref-link" class="input-deluxe" readonly value="Cargando...">
+            <button class="btn-3d" onclick="copyReferralLink()">
+                <i class="fa-solid fa-copy"></i> Copiar Mi Enlace
+            </button>
+        </div>
+    </section>
+
+    <!-- PANTALLA 3: HISTORIAL -->
+    <section id="screen-history" class="view-section">
+        <div class="cute-card" style="border-color: var(--orange); box-shadow: 0 9px 0px var(--orange-soft);">
+            <div style="font-size: 19px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; color: #D97706;">
+                <i class="fa-solid fa-star" style="color: var(--orange);"></i> Mis Pagos y Videos
+            </div>
+            <div id="ui-history-list"></div>
+        </div>
+    </section>
+
+    <!-- PANTALLA 4: RETIRAR POR BINANCE PAY + PANEL OCULTO -->
+    <section id="screen-withdraw" class="view-section">
+        <!-- Mantener presionado 5 segundos abre el Panel Admin -->
+        <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center;">
+            <div class="balance-title">Saldo Listo para Retirar</div>
+            <div class="balance-main-num">$<span id="ui-withdraw-usdt">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
+            <div class="balance-usdt-pill">Envío directo sin comisión por Binance Pay</div>
+        </div>
+
+        <div class="cute-card" style="border-color: var(--mint-dark); box-shadow: 0 9px 0px var(--mint-soft);">
+            <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #099268;">
+                <i class="fa-solid fa-bolt" style="color: var(--orange);"></i> Retirar mi Saldo a Binance Pay
+            </div>
+
+            <div style="background: #FFF9DB; border: 3px solid var(--orange); border-radius: 20px; padding: 12px 14px; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--text-cute); line-height: 1.7;">
+                <div style="display:flex; justify-content:space-between;"><span>Mínimo (~8 videos):</span> <strong style="color:var(--pink);">$0.00300 USDT</strong></div>
+                <div style="display:flex; justify-content:space-between;"><span>Comisión Binance:</span> <strong style="color:#099268;">¡Gratis! ($0.00)</strong></div>
+                <div style="display:flex; justify-content:space-between;"><span>Tiempo de envío:</span> <strong style="color:var(--purple);">Cada 24 horas</strong></div>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 6px;">TU BINANCE ID O CORREO:</div>
+            <input type="text" id="input-binance-id" class="input-deluxe" placeholder="Ej: 548920192 o correo@gmail.com">
+
+            <button class="btn-3d" onclick="submitBinanceWithdraw()">
+                <i class="fa-solid fa-paper-plane"></i> Pedir Mi Pago en USDT
+            </button>
+        </div>
+
+        <!-- PANEL ADMIN OCULTO -->
+        <div id="admin-secret-panel" class="cute-card oculto" style="border-color: var(--orange);">
+            <div style="font-size: 17px; font-weight: 700; color: var(--purple); margin-bottom: 12px; text-align: center;">
+                <i class="fa-solid fa-crown" style="color: var(--orange);"></i> Panel Admin — Pagos Binance Pay
+            </div>
+            <div id="admin-pending-list" style="max-height: 320px; overflow-y: auto;"></div>
+        </div>
+    </section>
+
+    <!-- NAVEGACIÓN INFERIOR ARCOÍRIS -->
+    <nav class="bottom-nav">
+        <button class="nav-tab tab-1 active" onclick="navTo('home', this)">
+            <i class="fa-solid fa-play"></i>
+            <span>Videos</span>
+        </button>
+        <button class="nav-tab tab-2" onclick="navTo('invite', this)">
+            <i class="fa-solid fa-user-group"></i>
+            <span>Amigos</span>
+        </button>
+        <button class="nav-tab tab-3" onclick="navTo('history', this)">
+            <i class="fa-solid fa-star"></i>
+            <span>Premios</span>
+        </button>
+        <button class="nav-tab tab-4" onclick="navTo('withdraw', this)">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Retirar</span>
+        </button>
+    </nav>
+
+</div>
+
+<script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) { tg.expand(); tg.ready(); }
+
+    // Configuración Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyALWjB7Ut2s-jUcC7hhXODRzFHhuBoHZU",
+        authDomain: "usdt-8b129.firebaseapp.com",
+        projectId: "usdt-8b129",
+        storageBucket: "usdt-8b129.appstop.com",
+        messagingSenderId: "816855613636",
+        appId: "1:816855613636:web:7891ba3996acef2c91c991"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // ==================== ECONOMÍA REAL MONETAG (SOLO USDT) ====================
+    // 1 anuncio Monetag te genera aprox: $0.00090 USDT
+    // Premio variado al usuario (30% a 50% de lo que tú ganas): entre $0.00030 y $0.00045 USDT por anuncio
+    // En 8 anuncios (2 días de 4 videos): tú ganas ~$0.00720 USDT y el usuario junta ~$0.00300 USDT
+    const INGRESO_ADMIN_POR_ANUNCIO = 0.00090;
+    const MIN_PORCENTAJE_USUARIO = 0.30; // 30%
+    const MAX_PORCENTAJE_USUARIO = 0.50; // 50%
+    const MIN_USDT_RETIRO = 0.00300;     // Se alcanza en ~8 anuncios vistos (aprox 42% de lo que generaron esos 8 anuncios)
+
+    const MAX_VIDEOS_DIARIOS = 4;
+    const CICLO_24H_MS = 24 * 60 * 60 * 1000;
+    const PAUSA_ENTRE_VIDEOS_SEG = 60;
+    const BOT_LINK = "https://t.me/basket24ballbot";
+
+    let USER_ID = "demo_user";
+    let USER_DATA = {
+        usdtBalance: 0,
+        videosWatched: 0,
+        cycleResetAt: 0,
+        referidos: [],
+        referidoPor: null,
+        comisionUsdt: 0,
+        historial: [],
+        pendientes: []
+    };
+
+    let cooldownSeconds = 0;
+    let cooldownInterval = null;
+    let adminTimer = null;
+
+    // Función que calcula el pago variado (30% a 50% de tu ganancia por anuncio)
+    function calcularPremioVariadoUSDT() {
+        const porcentajeAleatorio = MIN_PORCENTAJE_USUARIO + (Math.random() * (MAX_PORCENTAJE_USUARIO - MIN_PORCENTAJE_USUARIO));
+        const premio = INGRESO_ADMIN_POR_ANUNCIO * porcentajeAleatorio;
+        return parseFloat(premio.toFixed(5));
+    }
+
+    // Sonido alegre al ganar
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playWinSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.35);
+    }
+
+    function showToast(msg, isError = false) {
+        const box = document.getElementById('toast-box');
+        const icon = document.getElementById('toast-icon');
+        document.getElementById('toast-text').innerText = msg;
+        icon.className = isError ? "fa-solid fa-circle-exclamation" : "fa-solid fa-star";
+        icon.style.color = isError ? "#FF4D94" : "#FF9F1C";
+        box.classList.add('show');
+        setTimeout(() => box.classList.remove('show'), 3000);
+    }
+
+    function checkCycleReset() {
+        const now = Date.now();
+        if (USER_DATA.cycleResetAt && now >= USER_DATA.cycleResetAt) {
+            USER_DATA.videosWatched = 0;
+            USER_DATA.cycleResetAt = 0;
+            saveUserState();
+        }
+    }
+
+    async function initUser() {
+        const tgUser = tg?.initDataUnsafe?.user;
+        USER_ID = tgUser?.id ? tgUser.id.toString() : "user_local_01";
+        const firstName = tgUser?.first_name || "Amiguito";
+        const username = tgUser?.username || "usuario";
+
+        document.getElementById('ui-username').innerText = `¡Hola, ${firstName}!`;
+        document.getElementById('ui-avatar').innerText = firstName.charAt(0).toUpperCase();
+        document.getElementById('ui-ref-link').value = `${BOT_LINK}?startapp=${USER_ID}`;
+
+        try {
+            const doc = await db.collection('usuarios').doc(USER_ID).get();
+            if (doc.exists) {
+                const d = doc.data();
+                // Si tenía créditos antiguos, los migra a USDT limpio
+                USER_DATA.usdtBalance = d.usdtBalance !== undefined ? d.usdtBalance : 0;
+                USER_DATA.videosWatched = d.videosWatched || 0;
+                USER_DATA.cycleResetAt = d.cycleResetAt || 0;
+                USER_DATA.referidos = d.referidos || [];
+                USER_DATA.referidoPor = d.referidoPor || null;
+                USER_DATA.comisionUsdt = d.comisionUsdt || 0;
+                USER_DATA.historial = d.historial || [];
+                USER_DATA.pendientes = d.pendientes || [];
+            } else {
+                await db.collection('usuarios').doc(USER_ID).set({
+                    telegramId: USER_ID,
+                    telegramUsername: username,
+                    telegramFirstName: firstName,
+                    usdtBalance: 0,
+                    videosWatched: 0,
+                    cycleResetAt: 0,
+                    referidos: [],
+                    comisionUsdt: 0,
+                    historial: [],
+                    pendientes: []
+                });
+            }
+        } catch (e) {}
+
+        checkCycleReset();
+        renderAll();
+        setupSecretAdmin();
+
+        setInterval(() => {
+            checkCycleReset();
+            updateActionButtonState();
+        }, 1000);
+    }
+
+    function renderAll() {
+        const usdt = USER_DATA.usdtBalance || 0;
+        const watched = USER_DATA.videosWatched || 0;
+
+        document.getElementById('ui-usdt-main').innerText = usdt.toFixed(5);
+        document.getElementById('ui-withdraw-usdt').innerText = usdt.toFixed(5);
+        document.getElementById('ui-videos-badge').innerText = `${watched} / ${MAX_VIDEOS_DIARIOS}`;
+
+        const falta = Math.max(0, MIN_USDT_RETIRO - usdt);
+        document.getElementById('ui-min-progress').innerText = falta === 0
+            ? "✨ ¡Ya puedes retirar a tu Binance Pay!"
+            : `Te faltan $${falta.toFixed(5)} USDT para retirar (Mín: $${MIN_USDT_RETIRO.toFixed(4)})`;
+
+        const pct = Math.min(100, (watched / MAX_VIDEOS_DIARIOS) * 100);
+        document.getElementById('ui-progress-bar').style.width = `${pct}%`;
+
+        // Renderizar los 4 cuadros multicolor mostrando premio variado 30% - 50%
+        const stepsContainer = document.getElementById('steps-container');
+        let htmlSteps = '';
+        for (let i = 1; i <= MAX_VIDEOS_DIARIOS; i++) {
+            const isDone = i <= watched;
+            const isNext = i === watched + 1;
+            const stateClass = isDone ? 'completed' : (isNext ? 'active-next' : '');
+            const iconClass = isDone ? 'fa-check' : (isNext ? 'fa-play' : 'fa-heart');
+
+            htmlSteps += `
+                <div class="step-slot color-${i} ${stateClass}">
+                    <div class="step-icon"><i class="fa-solid ${iconClass}"></i></div>
+                    <div class="step-label">Video ${i}</div>
+                    <div class="step-reward">30% a 50%</div>
+                </div>
+            `;
+        }
+        stepsContainer.innerHTML = htmlSteps;
+
+        updateActionButtonState();
+
+        document.getElementById('ui-ref-count').innerText = (USER_DATA.referidos || []).length;
+        document.getElementById('ui-ref-commission').innerText = `$${(USER_DATA.comisionUsdt || 0).toFixed(5)}`;
+
+        const hList = document.getElementById('ui-history-list');
+        const hist = USER_DATA.historial || [];
+        if (hist.length === 0) {
+            hList.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--text-soft); font-size: 14px; font-weight: 700;">¡Mira tu primer video para ganar USDT directos!</div>`;
+        } else {
+            hList.innerHTML = hist.slice().reverse().slice(0, 15).map(item => `
+                <div class="list-row">
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700;">${item.titulo || 'Premio USDT'}</div>
+                        <div style="font-size: 11px; color: var(--text-soft); font-weight: 700;">${item.fecha} • ${(item.estado || 'LISTO').toUpperCase()}</div>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 700; color: var(--pink);">${item.valor || ('$' + item.usdt + ' USDT')}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    function formatRemainingTime(ms) {
+        const totalSec = Math.max(0, Math.floor(ms / 1000));
+        const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+        const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+        const s = String(totalSec % 60).padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    }
+
+    function updateActionButtonState() {
+        const btn = document.getElementById('btn-watch-video');
+        const tag = document.getElementById('ui-status-tag');
+        if (!btn || btn.dataset.loading === 'true') return;
+
+        const watched = USER_DATA.videosWatched || 0;
+
+        if (watched >= MAX_VIDEOS_DIARIOS) {
+            const leftMs = (USER_DATA.cycleResetAt || 0) - Date.now();
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-clock"></i> Regresa en ${formatRemainingTime(leftMs)}`;
+            tag.innerText = "¡4/4 Completados!";
+            return;
+        }
+
+        if (cooldownSeconds > 0) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-hourglass-half"></i> Espera ${cooldownSeconds}s para otro video`;
+            tag.innerText = "Descansando...";
+            return;
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-play"></i> VER VIDEO (${watched + 1} / ${MAX_VIDEOS_DIARIOS})`;
+        tag.innerText = "¡Listos!";
+    }
+
+    function startCooldown() {
+        cooldownSeconds = PAUSA_ENTRE_VIDEOS_SEG;
+        clearInterval(cooldownInterval);
+        cooldownInterval = setInterval(() => {
+            cooldownSeconds--;
+            if (cooldownSeconds <= 0) {
+                cooldownSeconds = 0;
+                clearInterval(cooldownInterval);
+            }
+            updateActionButtonState();
+        }, 1000);
+    }
+
+    function watchDailyVideo() {
+        checkCycleReset();
+        if ((USER_DATA.videosWatched || 0) >= MAX_VIDEOS_DIARIOS || cooldownSeconds > 0) return;
+
+        const btn = document.getElementById('btn-watch-video');
+        btn.dataset.loading = 'true';
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Abriendo anuncio...`;
+
+        const onAdCompleted = async () => {
+            btn.dataset.loading = 'false';
+            const ganadoUsdt = calcularPremioVariadoUSDT();
+
+            USER_DATA.videosWatched = (USER_DATA.videosWatched || 0) + 1;
+            USER_DATA.usdtBalance = parseFloat(((USER_DATA.usdtBalance || 0) + ganadoUsdt).toFixed(5));
+
+            if (!USER_DATA.cycleResetAt || USER_DATA.videosWatched >= MAX_VIDEOS_DIARIOS) {
+                USER_DATA.cycleResetAt = Date.now() + CICLO_24H_MS;
+            }
+
+            USER_DATA.historial.push({
+                id: Date.now().toString(),
+                titulo: `Anuncio (${USER_DATA.videosWatched}/${MAX_VIDEOS_DIARIOS})`,
+                fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                valor: `+$${ganadoUsdt.toFixed(5)} USDT`,
+                estado: 'listo'
+            });
+
+            if (USER_DATA.videosWatched < MAX_VIDEOS_DIARIOS) {
+                startCooldown();
+            }
+
+            playWinSound();
+            renderAll();
+            await saveUserState();
+
+            document.getElementById('modal-reward-amount').innerText = `+$${ganadoUsdt.toFixed(5)} USDT`;
+            document.getElementById('reward-modal').classList.add('show');
+        };
+
+        if (typeof show_11698149 === 'function') {
+            show_11698149().then(onAdCompleted).catch(onAdCompleted);
+        } else {
+            setTimeout(onAdCompleted, 1500);
+        }
+    }
+
+    function closeRewardModal() {
+        document.getElementById('reward-modal').classList.remove('show');
+    }
+
+    async function saveUserState() {
+        try {
+            await db.collection('usuarios').doc(USER_ID).update({
+                usdtBalance: USER_DATA.usdtBalance,
+                videosWatched: USER_DATA.videosWatched,
+                cycleResetAt: USER_DATA.cycleResetAt,
+                historial: USER_DATA.historial,
+                pendientes: USER_DATA.pendientes
+            });
+        } catch (e) {}
+    }
+
+    async function submitBinanceWithdraw() {
+        const binanceId = document.getElementById('input-binance-id').value.trim();
+        if (!binanceId || binanceId.length < 4) {
+            return showToast("Escribe tu Binance ID o correo", true);
+        }
+        if ((USER_DATA.usdtBalance || 0) < MIN_USDT_RETIRO) {
+            return showToast(`Mínimo de retiro: $${MIN_USDT_RETIRO.toFixed(4)} USDT (~8 videos)`, true);
+        }
+
+        const pendienteActivo = (USER_DATA.pendientes || []).find(p => p.estado === 'pendiente');
+        if (pendienteActivo) {
+            return showToast("Ya tienes un retiro en camino", true);
+        }
+
+        const montoUSDT = USER_DATA.usdtBalance.toFixed(5);
+        const solicitud = {
+            id: Date.now().toString(),
+            wallet: binanceId,
+            usdt: montoUSDT,
+            fecha: new Date().toLocaleDateString(),
+            estado: 'pendiente',
+            usuario: USER_ID
+        };
+
+        USER_DATA.usdtBalance = 0;
+        USER_DATA.pendientes.push(solicitud);
+        USER_DATA.historial.push({
+            id: solicitud.id,
+            titulo: `Retiro Binance: ${binanceId}`,
+            fecha: solicitud.fecha,
+            valor: `-$${montoUSDT} USDT`,
+            estado: 'pendiente'
+        });
+
+        await saveUserState();
+        document.getElementById('input-binance-id').value = "";
+        renderAll();
+        showToast("¡Pedido enviado! Llega en 24h");
+    }
+
+    // Panel Admin Oculto (Mantener presionada 5 segundos la tarjeta de saldo en Retirar)
+    function setupSecretAdmin() {
+        const trigger = document.getElementById('secret-admin-trigger');
+        const startHold = () => {
+            adminTimer = setTimeout(() => {
+                document.getElementById('admin-secret-panel').classList.remove('oculto');
+                loadAdminPendingPayments();
+                showToast("Panel Admin Desbloqueado");
+            }, 5000);
+        };
+        const cancelHold = () => clearTimeout(adminTimer);
+
+        trigger.addEventListener('touchstart', startHold);
+        trigger.addEventListener('touchend', cancelHold);
+        trigger.addEventListener('mousedown', startHold);
+        trigger.addEventListener('mouseup', cancelHold);
+    }
+
+    async function loadAdminPendingPayments() {
+        const container = document.getElementById('admin-pending-list');
+        container.innerHTML = `<div style="text-align:center; padding:12px; font-weight:700;">Buscando retiros...</div>`;
+        try {
+            const snap = await db.collection('usuarios').get();
+            let items = [];
+            snap.forEach(doc => {
+                const d = doc.data();
+                (d.pendientes || []).forEach(p => {
+                    if (p.estado === 'pendiente') {
+                        items.push({ ...p, userId: doc.id, username: d.telegramUsername || 'usuario' });
+                    }
+                });
+            });
+
+            if (items.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:16px; color:var(--text-soft); font-weight:700;">Sin retiros pendientes.</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(p => {
+                const usdtVal = p.usdt || "0.00300";
+                return `
+                <div class="list-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+                    <div style="width:100%; display:flex; justify-content:space-between; font-size:13px; font-weight:700;">
+                        <span>@${p.username}</span>
+                        <span style="color:#099268;">$${usdtVal} USDT</span>
+                    </div>
+                    <div style="font-size:13px; font-weight:700; color:var(--purple);">
+                        Binance ID: <span style="color:var(--text-cute);">${p.wallet}</span>
+                    </div>
+                    <div style="display:flex; gap:8px; width:100%;">
+                        <button onclick="copyBinancePayment('${p.wallet}', '${usdtVal}')" style="flex:1; padding:8px; border-radius:12px; border:none; background:var(--pink); color:white; font-weight:700; font-size:12px; cursor:pointer;">
+                            <i class="fa-solid fa-copy"></i> Copiar Binance ID
+                        </button>
+                        <button onclick="resolvePayment('${p.userId}', '${p.id}', 'exitoso')" style="padding:8px 12px; border-radius:12px; border:none; background:#00BFA5; color:white; font-weight:700; font-size:12px; cursor:pointer;">
+                            Pagado
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+        } catch (e) {
+            container.innerHTML = `<div style="text-align:center; color:red;">Error al cargar</div>`;
+        }
+    }
+
+    window.copyBinancePayment = function(binanceId, usdtAmount) {
+        navigator.clipboard.writeText(binanceId);
+        showToast(`Copiado: ${binanceId} ($${usdtAmount} USDT)`);
+    };
+
+    window.resolvePayment = async function(uId, payId, nuevoEstado) {
+        try {
+            const ref = db.collection('usuarios').doc(uId);
+            const doc = await ref.get();
+            if (doc.exists) {
+                const data = doc.data();
+                const nuevosPend = (data.pendientes || []).filter(p => p.id !== payId);
+                const nuevoHist = (data.historial || []).map(h => h.id === payId ? { ...h, estado: nuevoEstado } : h);
+                await ref.update({ pendientes: nuevosPend, historial: nuevoHist });
+                showToast("Marcado como pagado");
+                loadAdminPendingPayments();
+            }
+        } catch (e) {
+            showToast("Error al actualizar", true);
+        }
+    };
+
+    function copyReferralLink() {
+        const link = document.getElementById('ui-ref-link').value;
+        navigator.clipboard.writeText(link);
+        showToast("¡Enlace mágico copiado!");
+    }
+
+    function navTo(screenId, btn) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+        document.getElementById(`screen-${screenId}`).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    window.onload = initUser;
+</script>
 </body>
 </html>
