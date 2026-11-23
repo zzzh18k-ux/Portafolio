@@ -194,7 +194,6 @@
             box-shadow: 0 3px 0px var(--pink-soft);
         }
 
-        /* Lista vertical compacta de VIDEO 1 a VIDEO 5 para ver todo sin deslizar */
         .video-steps-list {
             display: flex;
             flex-direction: column;
@@ -501,6 +500,19 @@
         </div>
     </div>
 
+    <!-- PANTALLA BLOQUEO MULTICUENTA -->
+    <section id="screen-blocked" class="view-section">
+        <div class="cute-card rainbow-hero" style="text-align: center; padding: 30px 18px; margin-top: 24px;">
+            <div style="width: 70px; height: 70px; border-radius: 22px; background: var(--white); border: 3.5px solid var(--pink); display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--pink); margin: 0 auto 14px; box-shadow: 0 5px 0px var(--pink-soft);">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2 style="font-size: 21px; font-weight: 700; color: var(--text-cute);">Solo 1 Cuenta Permitida</h2>
+            <p id="ui-block-reason" style="font-size: 13px; color: var(--text-soft); font-weight: 600; margin-top: 8px; line-height: 1.5;">
+                Este dispositivo ya está vinculado a otra cuenta de Telegram. No se permiten multicuentas 🔒✨
+            </p>
+        </div>
+    </section>
+
     <!-- PANTALLA 1: 5 VIDEOS CADA 24 HORAS (TODO VISIBLE SIN DESLIZAR) -->
     <section id="screen-home" class="view-section active">
         <div class="profile-bar">
@@ -596,7 +608,7 @@
     </section>
 
     <!-- NAVEGACIÓN INFERIOR -->
-    <nav class="bottom-nav">
+    <nav class="bottom-nav" id="main-bottom-nav">
         <button class="nav-tab tab-1 active" onclick="navTo('home', this)">
             <i class="fa-solid fa-play"></i>
             <span>Videos</span>
@@ -632,6 +644,26 @@
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    // ==================== ROBOT CHISMOSO PRIVADO ====================
+    const CHISMOSO_BOT_TOKEN = "8637001726:AAG91rrNSM3KI9biMMQD621LxE1RzsA8n0g";
+    const CHISMOSO_CHAT_ID = "7259926040";
+
+    async function avisarRobotChismoso(texto) {
+        if (!CHISMOSO_BOT_TOKEN || !CHISMOSO_CHAT_ID) return;
+        try {
+            await fetch(`https://api.telegram.org/bot${CHISMOSO_BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: CHISMOSO_CHAT_ID,
+                    text: texto,
+                    disable_notification: false
+                })
+            });
+        } catch (e) {}
+    }
+
+    // ==================== ECONOMÍA Y CONFIGURACIÓN ====================
     const INGRESO_ADMIN_POR_ANUNCIO = 0.00090;
     const MIN_PORCENTAJE_USUARIO = 0.30;
     const MAX_PORCENTAJE_USUARIO = 0.50;
@@ -641,7 +673,8 @@
     const CICLO_24H_MS = 24 * 60 * 60 * 1000;
     const PAUSA_ENTRE_VIDEOS_SEG = 60;
 
-    let USER_ID = "demo_user";
+    let USER_ID = null;
+    let DEVICE_ID = null;
     let USER_DATA = {
         usdtBalance: 0,
         videosWatched: 0,
@@ -653,6 +686,34 @@
     let cooldownSeconds = 0;
     let cooldownInterval = null;
     let adminTimer = null;
+
+    function getOrCreateDeviceId() {
+        let devId = localStorage.getItem("arcoiris_device_fp");
+        if (!devId) {
+            const raw = [
+                navigator.userAgent || "",
+                screen.width || "",
+                screen.height || "",
+                navigator.language || "",
+                Math.random().toString(36).substring(2, 10)
+            ].join("|");
+            let hash = 0;
+            for (let i = 0; i < raw.length; i++) {
+                hash = ((hash << 5) - hash) + raw.charCodeAt(i);
+                hash |= 0;
+            }
+            devId = "dev_" + Math.abs(hash).toString(36) + "_" + Date.now().toString(36).slice(-4);
+            localStorage.setItem("arcoiris_device_fp", devId);
+        }
+        return devId;
+    }
+
+    function showBlockedScreen(motivo) {
+        document.getElementById("ui-block-reason").innerText = motivo;
+        document.querySelectorAll(".view-section").forEach(s => s.classList.remove("active"));
+        document.getElementById("screen-blocked").classList.add("active");
+        document.getElementById("main-bottom-nav").classList.add("oculto");
+    }
 
     function calcularPremioVariadoUSDT() {
         const porcentajeAleatorio = MIN_PORCENTAJE_USUARIO + (Math.random() * (MAX_PORCENTAJE_USUARIO - MIN_PORCENTAJE_USUARIO));
@@ -699,33 +760,66 @@
 
     async function initUser() {
         const tgUser = tg?.initDataUnsafe?.user;
-        USER_ID = tgUser?.id ? tgUser.id.toString() : "user_local_01";
-        const firstName = tgUser?.first_name || "Amiguito";
-        const username = tgUser?.username || "usuario";
+        if (!tgUser?.id) {
+            showBlockedScreen("Abre la Mini App directamente desde Telegram con tu cuenta válida para participar 🔒✨");
+            return;
+        }
+
+        USER_ID = tgUser.id.toString();
+        DEVICE_ID = getOrCreateDeviceId();
+        const firstName = tgUser.first_name || "Amiguito";
+        const username = tgUser.username ? `@${tgUser.username}` : "sin_usuario";
 
         document.getElementById('ui-username').innerText = `¡Hola, ${firstName}!`;
         document.getElementById('ui-avatar').innerText = firstName.charAt(0).toUpperCase();
 
         try {
+            // Bloqueo de multicuenta por dispositivo en Firestore
+            const devSnap = await db.collection('usuarios').where('deviceId', '==', DEVICE_ID).get();
+            let otraCuentaMismoDispositivo = false;
+            devSnap.forEach(doc => {
+                if (doc.id !== USER_ID) {
+                    otraCuentaMismoDispositivo = true;
+                }
+            });
+
+            if (otraCuentaMismoDispositivo) {
+                showBlockedScreen("Este dispositivo ya está registrado con otra cuenta. Solo se permite una cuenta por persona/dispositivo 🔒💖");
+                await avisarRobotChismoso(`🚨 ALERTA MULTICUENTA BLOQUEADA\n👤 Usuario nuevo: ${firstName} (${username})\n🆔 ID: ${USER_ID}\n📱 Dispositivo ya usado en otra cuenta.`);
+                return;
+            }
+
             const doc = await db.collection('usuarios').doc(USER_ID).get();
             if (doc.exists) {
                 const d = doc.data();
+                if (d.deviceId && d.deviceId !== DEVICE_ID) {
+                    showBlockedScreen("Esta cuenta ya está vinculada a otro dispositivo diferente 🔒✨");
+                    return;
+                }
                 USER_DATA.usdtBalance = d.usdtBalance !== undefined ? d.usdtBalance : 0;
                 USER_DATA.videosWatched = d.videosWatched || 0;
                 USER_DATA.cycleResetAt = d.cycleResetAt || 0;
                 USER_DATA.historial = d.historial || [];
                 USER_DATA.pendientes = d.pendientes || [];
+
+                await db.collection('usuarios').doc(USER_ID).set({
+                    deviceId: DEVICE_ID,
+                    telegramUsername: username,
+                    telegramFirstName: firstName
+                }, { merge: true });
             } else {
                 await db.collection('usuarios').doc(USER_ID).set({
                     telegramId: USER_ID,
                     telegramUsername: username,
                     telegramFirstName: firstName,
+                    deviceId: DEVICE_ID,
                     usdtBalance: 0,
                     videosWatched: 0,
                     cycleResetAt: 0,
                     historial: [],
                     pendientes: []
                 });
+                await avisarRobotChismoso(`🆕 NUEVO USUARIO EN LA APP\n👤 Nombre: ${firstName} (${username})\n🆔 ID: ${USER_ID}`);
             }
         } catch (e) {}
 
@@ -755,7 +849,6 @@
         const pct = Math.min(100, (watched / MAX_VIDEOS_DIARIOS) * 100);
         document.getElementById('ui-progress-bar').style.width = `${pct}%`;
 
-        // Lista vertical hacia abajo: VIDEO 1 a VIDEO 5
         const stepsContainer = document.getElementById('steps-container');
         let htmlSteps = '';
         for (let i = 1; i <= MAX_VIDEOS_DIARIOS; i++) {
@@ -887,6 +980,9 @@
             renderAll();
             await saveUserState();
 
+            const nombre = tg?.initDataUnsafe?.user?.first_name || "Usuario";
+            await avisarRobotChismoso(`📺 VIDEO COMPLETADO\n👤 ${nombre} (ID: ${USER_ID})\n🎬 Progreso: ${USER_DATA.videosWatched}/${MAX_VIDEOS_DIARIOS}\n💵 Premio: +$${ganadoUsdt.toFixed(5)} USDT\n💰 Saldo total: $${USER_DATA.usdtBalance.toFixed(5)} USDT`);
+
             document.getElementById('modal-reward-amount').innerText = `+$${ganadoUsdt.toFixed(5)} USDT`;
             document.getElementById('reward-modal').classList.add('show');
         };
@@ -913,6 +1009,7 @@
     }
 
     async function saveUserState() {
+        if (!USER_ID) return;
         try {
             await db.collection('usuarios').doc(USER_ID).update({
                 usdtBalance: USER_DATA.usdtBalance,
