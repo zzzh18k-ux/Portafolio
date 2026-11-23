@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Arcoíris Mágico — USDT Directo</title>
+    <title>Arcoíris Mágico — 5 Videos USDT</title>
     
-    <!-- Monetag SDK (Tu Zona 11698149) -->
-    <script src="//libtl.com/sdk.js" data-zone="11698149" data-sdk="show_11698149"></script>
+    <!-- Monetag SDK (Zona 11937394) -->
+    <script src="//libtl.com/sdk.js" data-zone="11937394" data-sdk="show_11937394"></script>
     
     <!-- Telegram WebApp & Firebase SDKs -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     
-    <!-- Letra Súper Adorable y Redondita (Fredoka) + Iconos -->
+    <!-- Tipografía Fredoka e Iconos FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -85,7 +85,6 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Tarjetas Kawaii con Bordes Arcoíris 3D */
         .cute-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
@@ -120,7 +119,6 @@
             35%, 100% { left: 140%; }
         }
 
-        /* Cabecera Adorable */
         .profile-bar {
             display: flex;
             align-items: center;
@@ -165,7 +163,6 @@
             box-shadow: 0 4px 0px var(--orange-soft);
         }
 
-        /* Saldo Directo en USDT */
         .balance-title {
             font-size: 12px;
             font-weight: 700;
@@ -197,71 +194,77 @@
             box-shadow: 0 4px 0px var(--pink-soft);
         }
 
-        /* Los 4 Cuadros de Video Multicolor */
+        /* Cuadrícula adaptable para 5 cuadros de videos */
         .video-steps-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
             margin: 18px 0;
         }
         .step-slot {
-            border-radius: 22px;
-            padding: 14px 4px;
+            border-radius: 18px;
+            padding: 10px 2px;
             text-align: center;
             transition: all 0.25s ease;
             position: relative;
-            border: 3px solid;
+            border: 2.5px solid;
         }
         .step-slot.color-1 {
             background: #FFF0F6;
             border-color: var(--pink);
-            box-shadow: 0 6px 0px var(--pink-soft);
+            box-shadow: 0 4px 0px var(--pink-soft);
         }
         .step-slot.color-2 {
             background: #EBFBFF;
             border-color: var(--blue);
-            box-shadow: 0 6px 0px var(--blue-soft);
+            box-shadow: 0 4px 0px var(--blue-soft);
         }
         .step-slot.color-3 {
             background: #FFF9DB;
             border-color: var(--orange);
-            box-shadow: 0 6px 0px var(--orange-soft);
+            box-shadow: 0 4px 0px var(--orange-soft);
         }
         .step-slot.color-4 {
             background: #F8F0FC;
             border-color: var(--purple);
-            box-shadow: 0 6px 0px var(--purple-soft);
+            box-shadow: 0 4px 0px var(--purple-soft);
+        }
+        .step-slot.color-5 {
+            background: #E6FCF5;
+            border-color: var(--mint-dark);
+            box-shadow: 0 4px 0px var(--mint-soft);
         }
 
         .step-slot.completed {
             background: linear-gradient(180deg, #D8F5A2 0%, #8CE99A 100%) !important;
             border-color: #2B8A3E !important;
-            box-shadow: 0 6px 0px #B2F2BB !important;
+            box-shadow: 0 4px 0px #B2F2BB !important;
         }
         .step-slot.active-next {
             animation: bounceCute 1.4s infinite;
         }
         @keyframes bounceCute {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-6px) scale(1.04); }
+            50% { transform: translateY(-5px) scale(1.03); }
         }
 
         .step-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 14px;
-            margin: 0 auto 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 12px;
+            margin: 0 auto 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 17px;
+            font-size: 14px;
             background: var(--white);
-            border: 2.5px solid currentColor;
+            border: 2px solid currentColor;
         }
         .color-1 .step-icon { color: var(--pink); }
         .color-2 .step-icon { color: var(--blue); }
         .color-3 .step-icon { color: var(--orange); }
         .color-4 .step-icon { color: var(--purple); }
+        .color-5 .step-icon { color: var(--mint-dark); }
 
         .step-slot.completed .step-icon {
             background: #2B8A3E;
@@ -269,18 +272,17 @@
             border-color: #FFF;
         }
         .step-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--text-cute);
         }
         .step-reward {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             color: var(--pink);
             margin-top: 2px;
         }
 
-        /* Barra de Progreso Arcoíris */
         .progress-track {
             width: 100%;
             height: 20px;
@@ -306,7 +308,6 @@
             100% { background-position: 200% 50%; }
         }
 
-        /* Botón Súper Colorido 3D */
         .btn-3d {
             width: 100%;
             min-height: 60px;
@@ -338,7 +339,6 @@
             text-shadow: none;
         }
 
-        /* Inputs Adorables */
         .input-deluxe {
             width: 100%;
             height: 56px;
@@ -359,7 +359,6 @@
             box-shadow: 0 4px 0px var(--pink-soft);
         }
 
-        /* Barra Inferior Multicolor */
         .bottom-nav {
             position: fixed;
             bottom: 12px;
@@ -419,7 +418,6 @@
             box-shadow: 0 4px 0px var(--mint-soft);
         }
 
-        /* Modal Fiesta de Colores */
         .reward-overlay {
             position: fixed;
             inset: 0;
@@ -448,7 +446,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Toast Superior */
         #toast-box {
             position: fixed;
             top: 18px;
@@ -490,20 +487,20 @@
 
 <div id="app-wrapper">
 
-    <!-- Toast de Notificación -->
+    <!-- Toast -->
     <div id="toast-box">
         <i id="toast-icon" class="fa-solid fa-star" style="color: var(--orange); font-size: 20px;"></i>
         <span id="toast-text">¡Listo!</span>
     </div>
 
-    <!-- Modal de Video Completado (Recompensa Variada en USDT) -->
+    <!-- Modal Recompensa Variada -->
     <div id="reward-modal" class="reward-overlay">
         <div class="reward-popup">
             <div style="width: 78px; height: 78px; border-radius: 26px; background: linear-gradient(135deg, #FF4D94, #FEE440, #00BBF9); color: #FFF; font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; border: 3.5px solid #FFF; box-shadow: 0 6px 15px rgba(255, 77, 148, 0.35);">
                 <i class="fa-solid fa-face-laugh-beam"></i>
             </div>
             <div style="font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase;">✨ ¡Recompensa Variada! ✨</div>
-            <h3 id="modal-reward-amount" style="font-size: 32px; font-weight: 700; color: var(--pink); margin: 6px 0;">+$0.00040 USDT</h3>
+            <h3 id="modal-reward-amount" style="font-size: 30px; font-weight: 700; color: var(--pink); margin: 6px 0;">+$0.00040 USDT</h3>
             <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-bottom: 20px;">¡Sumados directamente a tu saldo USDT para Binance Pay!</p>
             <button class="btn-3d" onclick="closeRewardModal()">
                 <i class="fa-solid fa-heart"></i> ¡Yuju, Gracias!
@@ -511,7 +508,7 @@
         </div>
     </div>
 
-    <!-- PANTALLA 1: 4 VIDEOS CADA 24 HORAS (SOLO USDT) -->
+    <!-- PANTALLA 1: 5 VIDEOS CADA 24 HORAS -->
     <section id="screen-home" class="view-section active">
         <div class="profile-bar">
             <div class="user-box">
@@ -523,32 +520,32 @@
             </div>
             <div class="daily-pill">
                 <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--pink);"></i>
-                <span id="ui-videos-badge">0 / 4</span> Hoy
+                <span id="ui-videos-badge">0 / 5</span> Hoy
             </div>
         </div>
 
-        <!-- Balance Principal Directo en USDT -->
+        <!-- Balance Principal -->
         <div class="cute-card rainbow-hero" style="text-align: center; padding: 26px 18px;">
             <div class="balance-title"><i class="fa-solid fa-rainbow"></i> Mi Saldo Disponible</div>
             <div class="balance-main-num">$<span id="ui-usdt-main">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
             <div class="balance-usdt-pill" id="ui-min-progress">Mínimo de retiro: $0.00300 USDT (~8 videos)</div>
         </div>
 
-        <!-- Tarjeta de los 4 Videos cada 24 Horas -->
+        <!-- Tarjeta de los 5 Videos Diarios -->
         <div class="cute-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-size: 18px; font-weight: 700; color: var(--pink);">
-                    <i class="fa-solid fa-tv"></i> Tus 4 Videos del Día
+                    <i class="fa-solid fa-tv"></i> Tus 5 Videos del Día
                 </span>
                 <span id="ui-status-tag" style="background: #EBFBFF; border: 2.5px solid var(--blue); color: #0088CC; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 16px;">
                     ¡Listos!
                 </span>
             </div>
             <p style="font-size: 13px; color: var(--text-soft); font-weight: 600;">
-                Cada video te entrega un premio variado entre el 30% y 50% en USDT:
+                Completa tus 5 videos diarios y gana premios variados del 30% al 50%:
             </p>
 
-            <!-- 4 Bloques Multicolor -->
+            <!-- 5 Bloques Multicolor -->
             <div class="video-steps-grid" id="steps-container"></div>
 
             <!-- Barra de Progreso Arcoíris -->
@@ -558,7 +555,7 @@
 
             <!-- Botón Principal -->
             <button class="btn-3d" id="btn-watch-video" onclick="watchDailyVideo()">
-                <i class="fa-solid fa-play"></i> VER VIDEO (1 / 4)
+                <i class="fa-solid fa-play"></i> VER VIDEO (1 / 5)
             </button>
         </div>
     </section>
@@ -603,9 +600,8 @@
         </div>
     </section>
 
-    <!-- PANTALLA 4: RETIRAR POR BINANCE PAY + PANEL OCULTO -->
+    <!-- PANTALLA 4: RETIRAR POR BINANCE PAY -->
     <section id="screen-withdraw" class="view-section">
-        <!-- Mantener presionado 5 segundos abre el Panel Admin -->
         <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center;">
             <div class="balance-title">Saldo Listo para Retirar</div>
             <div class="balance-main-num">$<span id="ui-withdraw-usdt">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
@@ -640,7 +636,7 @@
         </div>
     </section>
 
-    <!-- NAVEGACIÓN INFERIOR ARCOÍRIS -->
+    <!-- NAVEGACIÓN INFERIOR -->
     <nav class="bottom-nav">
         <button class="nav-tab tab-1 active" onclick="navTo('home', this)">
             <i class="fa-solid fa-play"></i>
@@ -666,7 +662,6 @@
     const tg = window.Telegram?.WebApp;
     if (tg) { tg.expand(); tg.ready(); }
 
-    // Configuración Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyALWjB7Ut2s-jUcC7hhXODRzFHhuBoHZU",
         authDomain: "usdt-8b129.firebaseapp.com",
@@ -678,16 +673,13 @@
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // ==================== ECONOMÍA REAL MONETAG (SOLO USDT) ====================
-    // 1 anuncio Monetag te genera aprox: $0.00090 USDT
-    // Premio variado al usuario (30% a 50% de lo que tú ganas): entre $0.00030 y $0.00045 USDT por anuncio
-    // En 8 anuncios (2 días de 4 videos): tú ganas ~$0.00720 USDT y el usuario junta ~$0.00300 USDT
     const INGRESO_ADMIN_POR_ANUNCIO = 0.00090;
-    const MIN_PORCENTAJE_USUARIO = 0.30; // 30%
-    const MAX_PORCENTAJE_USUARIO = 0.50; // 50%
-    const MIN_USDT_RETIRO = 0.00300;     // Se alcanza en ~8 anuncios vistos (aprox 42% de lo que generaron esos 8 anuncios)
+    const MIN_PORCENTAJE_USUARIO = 0.30;
+    const MAX_PORCENTAJE_USUARIO = 0.50;
+    const MIN_USDT_RETIRO = 0.00300;
 
-    const MAX_VIDEOS_DIARIOS = 4;
+    // Configuración para 5 videos diarios
+    const MAX_VIDEOS_DIARIOS = 5;
     const CICLO_24H_MS = 24 * 60 * 60 * 1000;
     const PAUSA_ENTRE_VIDEOS_SEG = 60;
     const BOT_LINK = "https://t.me/basket24ballbot";
@@ -708,14 +700,12 @@
     let cooldownInterval = null;
     let adminTimer = null;
 
-    // Función que calcula el pago variado (30% a 50% de tu ganancia por anuncio)
     function calcularPremioVariadoUSDT() {
         const porcentajeAleatorio = MIN_PORCENTAJE_USUARIO + (Math.random() * (MAX_PORCENTAJE_USUARIO - MIN_PORCENTAJE_USUARIO));
         const premio = INGRESO_ADMIN_POR_ANUNCIO * porcentajeAleatorio;
         return parseFloat(premio.toFixed(5));
     }
 
-    // Sonido alegre al ganar
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playWinSound() {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -767,7 +757,6 @@
             const doc = await db.collection('usuarios').doc(USER_ID).get();
             if (doc.exists) {
                 const d = doc.data();
-                // Si tenía créditos antiguos, los migra a USDT limpio
                 USER_DATA.usdtBalance = d.usdtBalance !== undefined ? d.usdtBalance : 0;
                 USER_DATA.videosWatched = d.videosWatched || 0;
                 USER_DATA.cycleResetAt = d.cycleResetAt || 0;
@@ -818,7 +807,7 @@
         const pct = Math.min(100, (watched / MAX_VIDEOS_DIARIOS) * 100);
         document.getElementById('ui-progress-bar').style.width = `${pct}%`;
 
-        // Renderizar los 4 cuadros multicolor mostrando premio variado 30% - 50%
+        // Renderizado dinámico de los 5 cuadros
         const stepsContainer = document.getElementById('steps-container');
         let htmlSteps = '';
         for (let i = 1; i <= MAX_VIDEOS_DIARIOS; i++) {
@@ -831,7 +820,7 @@
                 <div class="step-slot color-${i} ${stateClass}">
                     <div class="step-icon"><i class="fa-solid ${iconClass}"></i></div>
                     <div class="step-label">Video ${i}</div>
-                    <div class="step-reward">30% a 50%</div>
+                    <div class="step-reward">30% - 50%</div>
                 </div>
             `;
         }
@@ -878,7 +867,7 @@
             const leftMs = (USER_DATA.cycleResetAt || 0) - Date.now();
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-clock"></i> Regresa en ${formatRemainingTime(leftMs)}`;
-            tag.innerText = "¡4/4 Completados!";
+            tag.innerText = "¡5/5 Completados!";
             return;
         }
 
@@ -947,8 +936,9 @@
             document.getElementById('reward-modal').classList.add('show');
         };
 
-        if (typeof show_11698149 === 'function') {
-            show_11698149().then(onAdCompleted).catch(onAdCompleted);
+        // Llamada a la nueva zona 11937394
+        if (typeof show_11937394 === 'function') {
+            show_11937394().then(onAdCompleted).catch(onAdCompleted);
         } else {
             setTimeout(onAdCompleted, 1500);
         }
@@ -1010,7 +1000,6 @@
         showToast("¡Pedido enviado! Llega en 24h");
     }
 
-    // Panel Admin Oculto (Mantener presionada 5 segundos la tarjeta de saldo en Retirar)
     function setupSecretAdmin() {
         const trigger = document.getElementById('secret-admin-trigger');
         const startHold = () => {
