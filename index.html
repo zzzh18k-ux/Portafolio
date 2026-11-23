@@ -68,38 +68,38 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            padding-bottom: 110px;
+            padding-bottom: 84px;
         }
 
         .view-section {
             display: none;
             flex-direction: column;
-            padding: 18px 16px;
-            animation: popCute 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 10px 14px;
+            animation: popCute 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .view-section.active {
             display: flex;
         }
         @keyframes popCute {
-            0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+            0% { opacity: 0; transform: scale(0.95) translateY(8px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .cute-card {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 20px;
-            border: 3.5px solid var(--pink);
-            box-shadow: 0 9px 0px var(--pink-soft), 0 14px 30px rgba(255, 77, 148, 0.18);
-            margin-bottom: 18px;
+            border-radius: 24px;
+            padding: 13px 14px;
+            border: 3px solid var(--pink);
+            box-shadow: 0 6px 0px var(--pink-soft), 0 10px 22px rgba(255, 77, 148, 0.16);
+            margin-bottom: 10px;
             position: relative;
             overflow: hidden;
         }
 
         .cute-card.rainbow-hero {
             background: linear-gradient(135deg, #FFDEE9 0%, #FFF6B7 35%, #C8FFF4 70%, #E0C3FC 100%);
-            border: 4px solid var(--purple);
-            box-shadow: 0 9px 0px #D0BFFF, 0 16px 35px rgba(155, 93, 229, 0.28);
+            border: 3.5px solid var(--purple);
+            box-shadow: 0 6px 0px #D0BFFF, 0 12px 24px rgba(155, 93, 229, 0.24);
         }
 
         .rainbow-hero::after {
@@ -124,147 +124,147 @@
             align-items: center;
             justify-content: space-between;
             background: var(--white);
-            border: 3.5px solid var(--blue);
-            border-radius: 26px;
-            padding: 10px 14px;
-            margin-bottom: 16px;
-            box-shadow: 0 6px 0px var(--blue-soft);
+            border: 3px solid var(--blue);
+            border-radius: 22px;
+            padding: 7px 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 0px var(--blue-soft);
         }
         .user-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .avatar-circle {
-            width: 46px;
-            height: 46px;
-            border-radius: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
             background: linear-gradient(135deg, var(--pink), var(--orange), var(--purple));
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 21px;
+            font-size: 18px;
             font-weight: 700;
-            border: 3px solid #FFF;
-            box-shadow: 0 4px 10px rgba(255, 77, 148, 0.35);
+            border: 2.5px solid #FFF;
+            box-shadow: 0 3px 8px rgba(255, 77, 148, 0.3);
         }
         .daily-pill {
             background: linear-gradient(135deg, #FFF3B0, #FFE066);
-            border: 2.5px solid var(--orange);
+            border: 2px solid var(--orange);
             color: #9C4100;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 4px 11px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 0px var(--orange-soft);
+            gap: 5px;
+            box-shadow: 0 3px 0px var(--orange-soft);
         }
 
         .balance-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             color: var(--purple);
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .balance-main-num {
-            font-size: 38px;
+            font-size: 31px;
             font-weight: 700;
             background: linear-gradient(90deg, #FF2A85, #9B5DE5, #00BBF9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
-            line-height: 1.15;
+            line-height: 1.1;
             filter: drop-shadow(0 2px 0px rgba(255,255,255,0.9));
         }
         .balance-usdt-pill {
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 5px;
             background: var(--white);
-            border: 3px solid var(--pink);
-            padding: 5px 14px;
-            border-radius: 22px;
-            font-size: 12px;
+            border: 2.5px solid var(--pink);
+            padding: 3px 12px;
+            border-radius: 18px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--pink);
-            box-shadow: 0 4px 0px var(--pink-soft);
+            box-shadow: 0 3px 0px var(--pink-soft);
         }
 
-        /* Lista vertical hacia abajo de VIDEO 1 a VIDEO 5 */
+        /* Lista vertical compacta de VIDEO 1 a VIDEO 5 para ver todo sin deslizar */
         .video-steps-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin: 16px 0;
+            gap: 6px;
+            margin: 9px 0 10px;
         }
         .step-slot {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-radius: 20px;
-            padding: 12px 16px;
-            transition: all 0.25s ease;
+            border-radius: 16px;
+            padding: 7px 12px;
+            transition: all 0.2s ease;
             position: relative;
-            border: 3px solid;
+            border: 2.5px solid;
         }
         .step-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         .step-slot.color-1 {
             background: #FFF0F6;
             border-color: var(--pink);
-            box-shadow: 0 5px 0px var(--pink-soft);
+            box-shadow: 0 3px 0px var(--pink-soft);
         }
         .step-slot.color-2 {
             background: #EBFBFF;
             border-color: var(--blue);
-            box-shadow: 0 5px 0px var(--blue-soft);
+            box-shadow: 0 3px 0px var(--blue-soft);
         }
         .step-slot.color-3 {
             background: #FFF9DB;
             border-color: var(--orange);
-            box-shadow: 0 5px 0px var(--orange-soft);
+            box-shadow: 0 3px 0px var(--orange-soft);
         }
         .step-slot.color-4 {
             background: #F8F0FC;
             border-color: var(--purple);
-            box-shadow: 0 5px 0px var(--purple-soft);
+            box-shadow: 0 3px 0px var(--purple-soft);
         }
         .step-slot.color-5 {
             background: #E6FCF5;
             border-color: var(--mint-dark);
-            box-shadow: 0 5px 0px var(--mint-soft);
+            box-shadow: 0 3px 0px var(--mint-soft);
         }
 
         .step-slot.completed {
             background: linear-gradient(90deg, #D8F5A2 0%, #8CE99A 100%) !important;
             border-color: #2B8A3E !important;
-            box-shadow: 0 5px 0px #B2F2BB !important;
+            box-shadow: 0 3px 0px #B2F2BB !important;
         }
         .step-slot.active-next {
-            animation: bounceCute 1.4s infinite;
+            animation: bounceCute 1.5s infinite;
         }
         @keyframes bounceCute {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-4px) scale(1.02); }
+            50% { transform: translateY(-2px) scale(1.015); }
         }
 
         .step-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 13px;
+            width: 26px;
+            height: 26px;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 12px;
             background: var(--white);
-            border: 2.5px solid currentColor;
+            border: 2px solid currentColor;
         }
         .color-1 .step-icon { color: var(--pink); }
         .color-2 .step-icon { color: var(--blue); }
@@ -278,17 +278,17 @@
             border-color: #FFF;
         }
         .step-label {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--text-cute);
-            letter-spacing: 0.4px;
+            letter-spacing: 0.3px;
         }
         .step-status-pill {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.85);
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.88);
             color: var(--text-soft);
         }
         .step-slot.completed .step-status-pill {
@@ -298,14 +298,14 @@
 
         .progress-track {
             width: 100%;
-            height: 20px;
+            height: 14px;
             background: #FFF0F6;
-            border: 3px solid var(--purple);
-            border-radius: 24px;
+            border: 2.5px solid var(--purple);
+            border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 18px;
+            margin-bottom: 11px;
             padding: 2px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.06);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
         }
         .progress-fill {
             height: 100%;
@@ -313,7 +313,7 @@
             background: linear-gradient(90deg, #FF4D94, #FF9F1C, #FEE440, #00F5D4, #00BBF9, #9B5DE5);
             background-size: 200% 100%;
             animation: moveRainbow 3s linear infinite;
-            border-radius: 18px;
+            border-radius: 14px;
             transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes moveRainbow {
@@ -323,92 +323,92 @@
 
         .btn-3d {
             width: 100%;
-            min-height: 60px;
-            border-radius: 24px;
+            min-height: 50px;
+            border-radius: 20px;
             background: linear-gradient(90deg, #FF4D94 0%, #FF8552 50%, #9B5DE5 100%);
             color: white;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 700;
-            border: 3.5px solid #6A1B9A;
-            box-shadow: 0 7px 0px #6A1B9A, 0 12px 24px rgba(255, 77, 148, 0.35);
+            border: 3px solid #6A1B9A;
+            box-shadow: 0 5px 0px #6A1B9A, 0 8px 18px rgba(255, 77, 148, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.12s ease;
             text-shadow: 0 2px 0px rgba(0,0,0,0.18);
         }
         .btn-3d:active {
-            transform: translateY(5px);
+            transform: translateY(4px);
             box-shadow: 0 2px 0px #6A1B9A;
         }
         .btn-3d:disabled {
             background: linear-gradient(90deg, #E9D8FD, #FFD6E8);
             border-color: var(--purple);
             color: var(--text-cute);
-            box-shadow: 0 4px 0px var(--purple-soft);
+            box-shadow: 0 3px 0px var(--purple-soft);
             cursor: not-allowed;
             text-shadow: none;
         }
 
         .bottom-nav {
             position: fixed;
-            bottom: 12px;
+            bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 26px);
-            max-width: 414px;
+            width: calc(100% - 24px);
+            max-width: 416px;
             background: #FFFFFF;
-            border: 3.5px solid var(--purple);
-            border-radius: 30px;
-            box-shadow: 0 8px 0px var(--purple-soft), 0 14px 32px rgba(155, 93, 229, 0.25);
+            border: 3px solid var(--purple);
+            border-radius: 26px;
+            box-shadow: 0 6px 0px var(--purple-soft), 0 10px 24px rgba(155, 93, 229, 0.22);
             display: flex;
             justify-content: space-around;
-            padding: 8px 6px;
+            padding: 6px 4px;
             z-index: 1000;
         }
         .nav-tab {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             background: transparent;
-            border: 2.5px solid transparent;
-            padding: 8px 10px;
-            border-radius: 20px;
+            border: 2px solid transparent;
+            padding: 6px 8px;
+            border-radius: 18px;
             cursor: pointer;
             color: var(--text-soft);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             transition: all 0.2s ease;
             width: 24%;
         }
-        .nav-tab i { font-size: 19px; }
+        .nav-tab i { font-size: 17px; }
 
         .nav-tab.tab-1.active {
             background: #FFF0F6;
             border-color: var(--pink);
             color: var(--pink);
-            box-shadow: 0 4px 0px var(--pink-soft);
+            box-shadow: 0 3px 0px var(--pink-soft);
         }
         .nav-tab.tab-2.active {
             background: #EBFBFF;
             border-color: var(--blue);
             color: #0088CC;
-            box-shadow: 0 4px 0px var(--blue-soft);
+            box-shadow: 0 3px 0px var(--blue-soft);
         }
         .nav-tab.tab-3.active {
             background: #FFF9DB;
             border-color: var(--orange);
             color: #D97706;
-            box-shadow: 0 4px 0px var(--orange-soft);
+            box-shadow: 0 3px 0px var(--orange-soft);
         }
         .nav-tab.tab-4.active {
             background: #E6FCF5;
             border-color: var(--mint-dark);
             color: #099268;
-            box-shadow: 0 4px 0px var(--mint-soft);
+            box-shadow: 0 3px 0px var(--mint-soft);
         }
 
         .reward-overlay {
@@ -426,13 +426,13 @@
         .reward-popup {
             background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F6 50%, #EBFBFF 100%);
             border: 4px solid var(--pink);
-            border-radius: 36px;
-            padding: 28px 22px;
+            border-radius: 34px;
+            padding: 26px 20px;
             width: 100%;
-            max-width: 350px;
+            max-width: 340px;
             text-align: center;
-            box-shadow: 0 10px 0px var(--purple), 0 20px 50px rgba(0,0,0,0.3);
-            animation: bounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 9px 0px var(--purple), 0 18px 40px rgba(0,0,0,0.3);
+            animation: bounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes bounceIn {
             0% { transform: scale(0.5); opacity: 0; }
@@ -441,21 +441,21 @@
 
         #toast-box {
             position: fixed;
-            top: 18px;
+            top: 14px;
             left: 50%;
             transform: translateX(-50%) translateY(-120px);
             background: var(--white);
             color: var(--text-cute);
-            border: 3.5px solid var(--pink);
-            box-shadow: 0 6px 0px var(--pink-soft), 0 10px 25px rgba(0,0,0,0.12);
-            padding: 12px 22px;
-            border-radius: 26px;
-            font-size: 14px;
+            border: 3px solid var(--pink);
+            box-shadow: 0 5px 0px var(--pink-soft), 0 8px 20px rgba(0,0,0,0.12);
+            padding: 10px 18px;
+            border-radius: 22px;
+            font-size: 13px;
             font-weight: 700;
             z-index: 10000;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             white-space: nowrap;
         }
@@ -469,9 +469,9 @@
             justify-content: space-between;
             background: linear-gradient(90deg, #FFF0F6, #F8F0FC, #EBFBFF);
             border: 2.5px solid var(--pink-soft);
-            border-radius: 20px;
-            padding: 12px 14px;
-            margin-bottom: 10px;
+            border-radius: 18px;
+            padding: 11px 14px;
+            margin-bottom: 9px;
         }
         .oculto { display: none !important; }
     </style>
@@ -482,33 +482,33 @@
 
     <!-- Toast -->
     <div id="toast-box">
-        <i id="toast-icon" class="fa-solid fa-star" style="color: var(--orange); font-size: 20px;"></i>
+        <i id="toast-icon" class="fa-solid fa-star" style="color: var(--orange); font-size: 18px;"></i>
         <span id="toast-text">¡Listo!</span>
     </div>
 
     <!-- Modal Recompensa Variada -->
     <div id="reward-modal" class="reward-overlay">
         <div class="reward-popup">
-            <div style="width: 78px; height: 78px; border-radius: 26px; background: linear-gradient(135deg, #FF4D94, #FEE440, #00BBF9); color: #FFF; font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; border: 3.5px solid #FFF; box-shadow: 0 6px 15px rgba(255, 77, 148, 0.35);">
+            <div style="width: 72px; height: 72px; border-radius: 24px; background: linear-gradient(135deg, #FF4D94, #FEE440, #00BBF9); color: #FFF; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; border: 3px solid #FFF; box-shadow: 0 5px 12px rgba(255, 77, 148, 0.35);">
                 <i class="fa-solid fa-face-laugh-beam"></i>
             </div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase;">✨ ¡Recompensa Variada! ✨</div>
-            <h3 id="modal-reward-amount" style="font-size: 30px; font-weight: 700; color: var(--pink); margin: 6px 0;">+$0.00040 USDT</h3>
-            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-bottom: 20px;">¡Sumados directamente a tu saldo USDT!</p>
+            <div style="font-size: 12px; font-weight: 700; color: var(--purple); text-transform: uppercase;">✨ ¡Recompensa Variada! ✨</div>
+            <h3 id="modal-reward-amount" style="font-size: 28px; font-weight: 700; color: var(--pink); margin: 5px 0;">+$0.00040 USDT</h3>
+            <p style="font-size: 13px; color: var(--text-soft); font-weight: 600; margin-bottom: 18px;">¡Sumados directamente a tu saldo USDT!</p>
             <button class="btn-3d" onclick="closeRewardModal()">
                 <i class="fa-solid fa-heart"></i> ¡Yuju, Gracias!
             </button>
         </div>
     </div>
 
-    <!-- PANTALLA 1: 5 VIDEOS CADA 24 HORAS -->
+    <!-- PANTALLA 1: 5 VIDEOS CADA 24 HORAS (TODO VISIBLE SIN DESLIZAR) -->
     <section id="screen-home" class="view-section active">
         <div class="profile-bar">
             <div class="user-box">
                 <div class="avatar-circle" id="ui-avatar">U</div>
                 <div>
-                    <div style="font-size: 17px; font-weight: 700;" id="ui-username">¡Hola!</div>
-                    <div style="font-size: 12px; font-weight: 600; color: var(--purple);">✨ Saldo USDT</div>
+                    <div style="font-size: 15px; font-weight: 700;" id="ui-username">¡Hola!</div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--purple);">✨ Saldo USDT</div>
                 </div>
             </div>
             <div class="daily-pill">
@@ -518,19 +518,19 @@
         </div>
 
         <!-- Balance Principal -->
-        <div class="cute-card rainbow-hero" style="text-align: center; padding: 26px 18px;">
+        <div class="cute-card rainbow-hero" style="text-align: center; padding: 14px 14px;">
             <div class="balance-title"><i class="fa-solid fa-rainbow"></i> Mi Saldo Disponible</div>
-            <div class="balance-main-num">$<span id="ui-usdt-main">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
+            <div class="balance-main-num">$<span id="ui-usdt-main">0.00000</span> <span style="font-size: 17px;">USDT</span></div>
             <div class="balance-usdt-pill" id="ui-min-progress">Mínimo de retiro: $0.00300 USDT (~8 videos)</div>
         </div>
 
         <!-- Tarjeta de los 5 Videos Diarios -->
-        <div class="cute-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 18px; font-weight: 700; color: var(--pink);">
+        <div class="cute-card" style="padding: 12px 13px; margin-bottom: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 16px; font-weight: 700; color: var(--pink);">
                     <i class="fa-solid fa-tv"></i> Tus 5 Videos del Día
                 </span>
-                <span id="ui-status-tag" style="background: #EBFBFF; border: 2.5px solid var(--blue); color: #0088CC; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 16px;">
+                <span id="ui-status-tag" style="background: #EBFBFF; border: 2px solid var(--blue); color: #0088CC; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 14px;">
                     ¡Listos!
                 </span>
             </div>
@@ -552,12 +552,12 @@
 
     <!-- PANTALLA 2: INVITAR (EN MANTENIMIENTO) -->
     <section id="screen-invite" class="view-section">
-        <div class="cute-card rainbow-hero" style="text-align: center; padding: 32px 20px;">
-            <div style="width: 72px; height: 72px; border-radius: 24px; background: var(--white); border: 3.5px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 32px; color: #0088CC; margin: 0 auto 14px; box-shadow: 0 6px 0px var(--blue-soft);">
+        <div class="cute-card rainbow-hero" style="text-align: center; padding: 30px 18px;">
+            <div style="width: 68px; height: 68px; border-radius: 22px; background: var(--white); border: 3px solid var(--blue); display: flex; align-items: center; justify-content: center; font-size: 30px; color: #0088CC; margin: 0 auto 12px; box-shadow: 0 5px 0px var(--blue-soft);">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
-            <h2 style="font-size: 22px; font-weight: 700; color: var(--text-cute);">Invitar en Mantenimiento</h2>
-            <p style="font-size: 14px; color: var(--text-soft); font-weight: 600; margin-top: 8px; line-height: 1.5;">
+            <h2 style="font-size: 21px; font-weight: 700; color: var(--text-cute);">Invitar en Mantenimiento</h2>
+            <p style="font-size: 13px; color: var(--text-soft); font-weight: 600; margin-top: 8px; line-height: 1.5;">
                 Estamos afinando los detalles de invitaciones para que funcione súper bien. ¡Vuelve pronto! 🛠️✨
             </p>
         </div>
@@ -565,8 +565,8 @@
 
     <!-- PANTALLA 3: HISTORIAL -->
     <section id="screen-history" class="view-section">
-        <div class="cute-card" style="border-color: var(--orange); box-shadow: 0 9px 0px var(--orange-soft);">
-            <div style="font-size: 19px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; color: #D97706;">
+        <div class="cute-card" style="border-color: var(--orange); box-shadow: 0 7px 0px var(--orange-soft);">
+            <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #D97706;">
                 <i class="fa-solid fa-star" style="color: var(--orange);"></i> Mis Premios USDT
             </div>
             <div id="ui-history-list"></div>
@@ -575,13 +575,12 @@
 
     <!-- PANTALLA 4: RETIRAR (EN MANTENIMIENTO + PANEL ADMIN OCULTO) -->
     <section id="screen-withdraw" class="view-section">
-        <!-- Mantener presionado 5 segundos abre el Panel Admin -->
-        <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center; padding: 28px 20px;">
-            <div style="width: 68px; height: 68px; border-radius: 22px; background: var(--white); border: 3.5px solid var(--mint-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; color: #099268; margin: 0 auto 12px; box-shadow: 0 6px 0px var(--mint-soft);">
+        <div class="cute-card rainbow-hero" id="secret-admin-trigger" style="text-align: center; padding: 24px 18px;">
+            <div style="width: 64px; height: 64px; border-radius: 20px; background: var(--white); border: 3px solid var(--mint-dark); display: flex; align-items: center; justify-content: center; font-size: 28px; color: #099268; margin: 0 auto 10px; box-shadow: 0 5px 0px var(--mint-soft);">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
             <div class="balance-title">Retiros en Mantenimiento</div>
-            <div class="balance-main-num">$<span id="ui-withdraw-usdt">0.00000</span> <span style="font-size: 20px;">USDT</span></div>
+            <div class="balance-main-num">$<span id="ui-withdraw-usdt">0.00000</span> <span style="font-size: 18px;">USDT</span></div>
             <p style="font-size: 13px; color: var(--text-cute); font-weight: 600; margin-top: 8px; line-height: 1.45;">
                 El botón de retiro está en mantenimiento temporal mientras preparamos todo. Tu saldo queda seguro 🛠️💖
             </p>
@@ -589,10 +588,10 @@
 
         <!-- PANEL ADMIN OCULTO -->
         <div id="admin-secret-panel" class="cute-card oculto" style="border-color: var(--orange);">
-            <div style="font-size: 17px; font-weight: 700; color: var(--purple); margin-bottom: 12px; text-align: center;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 10px; text-align: center;">
                 <i class="fa-solid fa-crown" style="color: var(--orange);"></i> Panel Admin — Pagos Binance Pay
             </div>
-            <div id="admin-pending-list" style="max-height: 320px; overflow-y: auto;"></div>
+            <div id="admin-pending-list" style="max-height: 280px; overflow-y: auto;"></div>
         </div>
     </section>
 
@@ -895,7 +894,6 @@
         if (typeof show_11937394 === 'function') {
             show_11937394()
                 .then((res) => {
-                    // Si Monetag devuelve que no hubo anuncio o fue cerrado sin completar, no lo da por perdido ni cobra de más
                     if (res === false || res === null || (typeof res === 'object' && res.status === 'no_ad')) {
                         resetBtnWithoutReward("Sin anuncio por ahora, intenta de nuevo");
                         return;
