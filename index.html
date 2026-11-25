@@ -774,18 +774,28 @@
         document.getElementById('ui-avatar').innerText = firstName.charAt(0).toUpperCase();
 
         try {
-            // Bloqueo de multicuenta por dispositivo en Firestore
+            // Analizar si existe una cuenta original que entró primero desde este dispositivo
             const devSnap = await db.collection('usuarios').where('deviceId', '==', DEVICE_ID).get();
-            let otraCuentaMismoDispositivo = false;
+            let primerUsuarioData = null;
+
             devSnap.forEach(doc => {
+                const d = doc.data();
                 if (doc.id !== USER_ID) {
-                    otraCuentaMismoDispositivo = true;
+                    if (!primerUsuarioData || (d.createdAt && d.createdAt < primerUsuarioData.createdAt)) {
+                        primerUsuarioData = {
+                            id: doc.id,
+                            username: d.telegramUsername || 'sin_usuario',
+                            firstName: d.telegramFirstName || 'Usuario',
+                            createdAt: d.createdAt || 0
+                        };
+                    }
                 }
             });
 
-            if (otraCuentaMismoDispositivo) {
-                showBlockedScreen("Este dispositivo ya está registrado con otra cuenta. Solo se permite una cuenta por persona/dispositivo 🔒💖");
-                await avisarRobotChismoso(`🚨 ALERTA MULTICUENTA BLOQUEADA\n👤 Usuario nuevo: ${firstName} (${username})\n🆔 ID: ${USER_ID}\n📱 Dispositivo ya usado en otra cuenta.`);
+            // Si hay una cuenta registrada anteriormente en este dispositivo y es diferente a la actual
+            if (primerUsuarioData) {
+                showBlockedScreen("Este dispositivo ya está vinculado a otra cuenta. Solo se permite una cuenta por persona/dispositivo 🔒💖");
+                await avisarRobotChismoso(`🚨 ALERTA MULTICUENTA DETECTADA Y BLOQUEADA\n\n🔴 Novedad / Multicuenta que intentó entrar:\n👤 Nombre: ${firstName}\nUsername: ${username}\n🆔 ID: ${USER_ID}\n\n🟢 Cuenta original (La primera que entró en este dispositivo):\n👤 Nombre: ${primerUsuarioData.firstName}\nUsername: ${primerUsuarioData.username}\n🆔 ID: ${primerUsuarioData.id}`);
                 return;
             }
 
@@ -808,11 +818,13 @@
                     telegramFirstName: firstName
                 }, { merge: true });
             } else {
+                const nowTs = Date.now();
                 await db.collection('usuarios').doc(USER_ID).set({
                     telegramId: USER_ID,
                     telegramUsername: username,
                     telegramFirstName: firstName,
                     deviceId: DEVICE_ID,
+                    createdAt: nowTs,
                     usdtBalance: 0,
                     videosWatched: 0,
                     cycleResetAt: 0,
